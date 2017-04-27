@@ -1,0 +1,124 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema termproject
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema termproject
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `cecs323h15` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+USE `cecs323h15` ;
+
+-- -----------------------------------------------------
+-- Table `termproject`.`Team`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`Team` (
+  `ScrumTeamMemberName` VARCHAR(45) NOT NULL,
+  `StakeholderName` VARCHAR(45) NULL,
+  `Roles` VARCHAR(45) NULL,
+  PRIMARY KEY (`ScrumTeamMemberName`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `termproject`.`ProjectBackLog`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`ProjectBackLog` (
+  `ProjectID` INT NOT NULL,
+  `ScrumTeamMemberName` VARCHAR(45) NULL,
+  `StakeholderName` VARCHAR(45) NULL,
+  `UserStoryID` VARCHAR(45) NULL,
+  PRIMARY KEY (`ProjectID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `termproject`.`SprintBackLog`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`SprintBackLog` (
+  `SprintID` INT NOT NULL,
+  `UserStoryID` INT NULL,
+  `Roles` VARCHAR(45) NULL,
+  `SprintDuration` VARCHAR(45) NULL,
+  `Planning` VARCHAR(45) NULL,
+  `SprintTeamMemberName` VARCHAR(45) NULL,
+  `ProjectBackLog_ProjectID` INT NOT NULL,
+  PRIMARY KEY (`SprintID`, `ProjectBackLog_ProjectID`),
+  INDEX `fk_SprintBackLog_ProjectBackLog1_idx` (`ProjectBackLog_ProjectID` ASC),
+  CONSTRAINT `fk_SprintBackLog_ProjectBackLog1`
+    FOREIGN KEY (`ProjectBackLog_ProjectID`)
+    REFERENCES `termproject`.`ProjectBackLog` (`ProjectID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `termproject`.`UserStory`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`UserStory` (
+  `toDo` VARCHAR(45) NOT NULL,
+  `BuildDocument` VARCHAR(45) NULL,
+  `Testing` VARCHAR(45) NULL,
+  `Completed` VARCHAR(45) NULL,
+  `UserStoryID` INT NOT NULL,
+  `Roles` VARCHAR(45) NULL,
+  PRIMARY KEY (`toDo`, `UserStoryID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `termproject`.`Team_has_SprintBackLog`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`Team_has_SprintBackLog` (
+  `Team_ScrumTeamMemberName` VARCHAR(45) NOT NULL,
+  `SprintBackLog_SprintID` INT NOT NULL,
+  PRIMARY KEY (`Team_ScrumTeamMemberName`, `SprintBackLog_SprintID`),
+  INDEX `fk_Team_has_SprintBackLog_SprintBackLog1_idx` (`SprintBackLog_SprintID` ASC),
+  INDEX `fk_Team_has_SprintBackLog_Team_idx` (`Team_ScrumTeamMemberName` ASC),
+  CONSTRAINT `fk_Team_has_SprintBackLog_Team`
+    FOREIGN KEY (`Team_ScrumTeamMemberName`)
+    REFERENCES `termproject`.`Team` (`ScrumTeamMemberName`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Team_has_SprintBackLog_SprintBackLog1`
+    FOREIGN KEY (`SprintBackLog_SprintID`)
+    REFERENCES `termproject`.`SprintBackLog` (`SprintID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `termproject`.`SprintBackLog_has_UserStory`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`SprintBackLog_has_UserStory` (
+  `SprintBackLog_SprintID` INT NOT NULL,
+  `UserStory_toDo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`SprintBackLog_SprintID`, `UserStory_toDo`),
+  INDEX `fk_SprintBackLog_has_UserStory_UserStory1_idx` (`UserStory_toDo` ASC),
+  INDEX `fk_SprintBackLog_has_UserStory_SprintBackLog1_idx` (`SprintBackLog_SprintID` ASC),
+  CONSTRAINT `fk_SprintBackLog_has_UserStory_SprintBackLog1`
+    FOREIGN KEY (`SprintBackLog_SprintID`)
+    REFERENCES `termproject`.`SprintBackLog` (`SprintID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_SprintBackLog_has_UserStory_UserStory1`
+    FOREIGN KEY (`UserStory_toDo`)
+    REFERENCES `termproject`.`UserStory` (`toDo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
