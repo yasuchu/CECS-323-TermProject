@@ -1,0 +1,180 @@
+package mypro;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Scanner;
+import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class pro {
+	//private static String dbURL1 = "jdbc:mysql://localhost:3306/diggggg?user=root&password=CECS323cecs";
+	//private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/?user=&password=";
+	private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
+	private static Connection conn1 = null;
+	private static Statement stmnt = null;
+
+	public static void main(String[] args) {
+		CreateConnection();
+		SelectRoom();
+		shutdown();
+	}
+
+	// Create connection
+	private static void CreateConnection() {
+		try {
+			conn1 = DriverManager.getConnection(dbURL1);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static void SelectRoom() {
+		String cho;
+		Scanner u = new Scanner(System.in);
+
+		String username;
+		Scanner un1 = new Scanner(System.in);
+
+		String usernam;
+		Scanner un2 = new Scanner(System.in);
+
+		String userna;
+		Scanner un3 = new Scanner(System.in);
+
+		int num1;
+
+		cho = "0";
+		do {
+			// menu
+			System.out.println("\n\nManage Records Menu");
+			System.out.println(
+					"______________________________________________________________________________________________________");
+			System.out.println("1. List all teams information");
+			System.out.println("2. List a team name and its meetings on a date range");
+			System.out.println("3. List a meeting details");
+			System.out.println("4. List all room's status on particular day");
+			System.out.println("5. Reserve a room for a team");
+			System.out.println("6. Insert a conference room and update all bookings from 1 conference room to this new conference room");
+			System.out.println("7. List meetings for 1 of the 4 purposes, between 1 particular date to another date");
+			System.out.println("8. Insert a new software development team");
+			System.out.println("9. Quit");
+			System.out.println("Enter Your Choice: ");
+			cho = u.next();
+			System.out.print("\n\n");
+
+			switch (cho) {
+			
+			// 1. List all teams information
+			case "1":
+				// Query for all teams information
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Team");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println(
+							"\n-------------------------------------------------------------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						System.out
+								.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t" + recipeNa);
+					}
+					results.close();
+					stmnt.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// Displays if table is empty
+				if (num1 == 1) {
+					System.out.println("No Software Teams exist. Choose option 8 to create one.");
+				}
+
+				break;
+
+				// 8. Insert a new software development team
+			case "8":
+				// Makes sure user does not enter an existing team
+				do {
+					System.out.println("Enter ScrumTeamMemberName: ");
+					username = un1.next();
+					num1 = 1;
+					try {
+						stmnt = conn1.createStatement();
+						ResultSet results = stmnt.executeQuery("select ScrumTeamMemberName from Team");
+						while (results.next()) {
+							String recipeName = results.getString(1);
+							if (username.equals(recipeName)) {
+								System.out.println("Team Name Taken. Please enter a different name");
+								num1=0;
+							}
+						}
+						results.close();
+						stmnt.close();
+
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+				} while (num1 == 0);
+
+				System.out.println("Enter StakeholderName: ");
+				usernam = un2.next();
+
+				System.out.println("Enter Roles: ");
+				userna = un3.next();
+
+				// changes stored in database
+				try {
+					PreparedStatement posted = conn1.prepareStatement("INSERT INTO Team VALUES('" + username + "', '" + usernam + "', '" +userna + "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nNew Team ADDED.");
+
+				break;
+
+			case "9":
+				System.out.println("Goodbye!");
+				break;
+
+			default:
+				System.out.println("Valid choices are 1, 2, 3, 4, 5, 6, 7, 8, 9");
+			}
+		} while (!cho.equals("9"));
+		
+		// Close Scanners declared earlier
+		u.close();
+		un1.close();
+		un2.close();
+		un3.close();
+
+	}
+
+	// Terminate connection at end
+	private static void shutdown() {
+		try {
+			if (stmnt != null) {
+				stmnt.close();
+			}
+			if (conn1 != null) {
+				conn1 = DriverManager.getConnection(dbURL1 + "shutdown=true");
+				conn1.close();
+			}
+		} catch (SQLException slqEx) {
+
+		}
+	}
+}
