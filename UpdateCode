@@ -57,16 +57,16 @@ public class Sprint {
 			System.out.println("4. Create Sprint");
 			System.out.println("5. Add user stories to the backlog");
 			System.out.println("6. Features to operate user stories of backlog");
-                        System.out.println("7. List developer and Sprints");
-                        System.out.println("8. List developer that is part of a Sprint");
-                        System.out.println("9. Quit");
+            System.out.println("7. List developer and Sprints");
+            System.out.println("8. List developer that is part of a Sprint");
+            System.out.println("9. Quit");
 			System.out.println("Enter Your Choice: ");
-	                int options = input.nextInt();
+	        int options = input.nextInt();
 			System.out.print("\n");
 
 			switch (options) {
 			case 1:
-				//Add stakeholders
+				//CRUD stakeholders
 				System.out.println("1. Create stakeholder");
 				System.out.println("2. Read stakeholder");
 				System.out.println("3. Update stakeholder");
@@ -133,7 +133,7 @@ public class Sprint {
 				break;
 				
 			case 2:
-				//Add Sprint Team members
+				//CRUD Sprint team members
 				System.out.println("1. Create sprint team member");
 				System.out.println("2. Read sprint team member");
 				System.out.println("3. Update sprint team member");
@@ -203,7 +203,7 @@ public class Sprint {
 				}
 				break;
 			case 3:
-				//List UserStory
+				//CRUD UserStory
 				System.out.println("1. Create UserStory");
 				System.out.println("2. Read UserStory");
 				System.out.println("3. Update UserStory");
@@ -269,6 +269,7 @@ public class Sprint {
 				}
 				break;
 			case 4:
+				//Create Sprint
 					try{
 						System.out.println("Making new Sprint... ");
 						System.out.println("Enter sprint id: ");
@@ -295,12 +296,16 @@ public class Sprint {
 
 			    break;
 			case 5:
+				//Add user stories to the backlog
 		        break;
 			case 6:
+				//Features to operate user stories of backlog
 				break;
 			case 7:
+				//List developer and Sprints
 				break;
 			case 8:
+				//List developer that is part of a Sprint
 				break;
 			case 9:
 				shutdown();
