@@ -131,7 +131,7 @@ public class Sprint {
 					System.out.println("Delete a stakeholder(ID): ");
 				    int IDdlt = input.nextInt();
 				    //sql statement for delete from table
-				    String delete = "DELETE FROM Stakeholders WHERE StakeholderID '" + IDdlt + "' ";
+				    String delete = "DELETE FROM Stakeholders WHERE idScrumTeam= '" + IDdlt + "' ";
 				    stmnt.executeUpdate(delete);
 					}
 					else{
@@ -154,7 +154,7 @@ public class Sprint {
 					String SprintTeamMemberName = input.next();
 					System.out.println("Enter sprint team id: ");
 					int idSprintTeam = input.nextInt();
-					System.out.println("Enter id scrum team member: ");
+					System.out.println("Enter id sprint team member: ");
 					int idScrumTeam = input.nextInt();
 					String insert = "INSERT INTO SprintTeam(SprintTeamMemberName, idSprintTeam, idScrumTeam)"   		
 							+ "\nVALUES (?, ?, ?)";
