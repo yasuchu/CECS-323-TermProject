@@ -1,0 +1,139 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `cecs323h15` DEFAULT CHARACTER SET utf8 ;
+USE `cecs323h15` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Sprint`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`Sprint` (
+  `idSprint` INT NOT NULL,
+  `startDate` VARCHAR(45) NULL,
+  `endDate` VARCHAR(45) NULL,
+  `started` VARCHAR(45) NULL,
+  `finished` VARCHAR(45) NULL,
+  PRIMARY KEY (`idSprint`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`UserStory`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`UserStory` (
+  `Title` VARCHAR(45) NOT NULL,
+  `Project` VARCHAR(45) NOT NULL,
+  `UserStoryStatus` VARCHAR(45) NOT NULL,
+  `Sprint_idSprint` INT NOT NULL,
+  `Sprint_idSprint1` INT NOT NULL,
+  PRIMARY KEY (`Title`, `Project`, `UserStoryStatus`, `Sprint_idSprint`, `Sprint_idSprint1`),
+  INDEX `fk_UserStory_Sprint1_idx` (`Sprint_idSprint1` ASC),
+  CONSTRAINT `fk_UserStory_Sprint1`
+    FOREIGN KEY (`Sprint_idSprint1`)
+    REFERENCES `mydb`.`Sprint` (`idSprint`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Task`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`Task` (
+  `Description` VARCHAR(45) NOT NULL,
+  `UserStory_Title` VARCHAR(45) NOT NULL,
+  `UserStory_Project` VARCHAR(45) NOT NULL,
+  `UserStory_UserStoryStatus_Status` VARCHAR(45) NOT NULL,
+  `UserStory_Sprint_idSprint` INT NOT NULL,
+  PRIMARY KEY (`Description`, `UserStory_Title`, `UserStory_Project`, `UserStory_UserStoryStatus_Status`, `UserStory_Sprint_idSprint`),
+  INDEX `fk_Task_UserStory1_idx` (`UserStory_Title` ASC, `UserStory_Project` ASC, `UserStory_UserStoryStatus_Status` ASC, `UserStory_Sprint_idSprint` ASC),
+  CONSTRAINT `fk_Task_UserStory1`
+    FOREIGN KEY (`UserStory_Title` , `UserStory_Project` , `UserStory_UserStoryStatus_Status` , `UserStory_Sprint_idSprint`)
+    REFERENCES `mydb`.`UserStory` (`Title` , `Project` , `UserStoryStatus` , `Sprint_idSprint`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`UserStoryStatus`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`UserStoryStatus` (
+  `Status` VARCHAR(45) NOT NULL,
+  `UserStory_Title` VARCHAR(45) NOT NULL,
+  `UserStory_Project` VARCHAR(45) NOT NULL,
+  `UserStory_UserStoryStatus_Status` VARCHAR(45) NOT NULL,
+  `UserStory_Sprint_idSprint` INT NOT NULL,
+  PRIMARY KEY (`Status`, `UserStory_Title`, `UserStory_Project`, `UserStory_UserStoryStatus_Status`, `UserStory_Sprint_idSprint`),
+  INDEX `fk_UserStoryStatus_UserStory1_idx` (`UserStory_Title` ASC, `UserStory_Project` ASC, `UserStory_UserStoryStatus_Status` ASC, `UserStory_Sprint_idSprint` ASC),
+  CONSTRAINT `fk_UserStoryStatus_UserStory1`
+    FOREIGN KEY (`UserStory_Title` , `UserStory_Project` , `UserStory_UserStoryStatus_Status` , `UserStory_Sprint_idSprint`)
+    REFERENCES `mydb`.`UserStory` (`Title` , `Project` , `UserStoryStatus` , `Sprint_idSprint`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ScumTeam`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`ScumTeam` (
+  `ScrumTeamID` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`ScrumTeamID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`Stakeholders`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`Stakeholders` (
+  `StakeholderName` VARCHAR(45) NOT NULL,
+  `StakeholderRole` VARCHAR(45) NULL,
+  `ScumTeam_ScrumTeamID` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`StakeholderName`, `ScumTeam_ScrumTeamID`),
+  INDEX `fk_Stakeholders_ScumTeam1_idx` (`ScumTeam_ScrumTeamID` ASC),
+  CONSTRAINT `fk_Stakeholders_ScumTeam1`
+    FOREIGN KEY (`ScumTeam_ScrumTeamID`)
+    REFERENCES `mydb`.`ScumTeam` (`ScrumTeamID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`SprintTeam`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cecs323h15`.`SprintTeam` (
+  `idSprintTeam` INT NOT NULL,
+  `SprintTeamMemberName` VARCHAR(45) NULL,
+  `ScumTeam_ScrumTeamID` VARCHAR(45) NOT NULL,
+  `Sprint_idSprint` INT NOT NULL,
+  PRIMARY KEY (`idSprintTeam`, `ScumTeam_ScrumTeamID`, `Sprint_idSprint`),
+  INDEX `fk_SprintTeam_ScumTeam1_idx` (`ScumTeam_ScrumTeamID` ASC),
+  INDEX `fk_SprintTeam_Sprint1_idx` (`Sprint_idSprint` ASC),
+  CONSTRAINT `fk_SprintTeam_ScumTeam1`
+    FOREIGN KEY (`ScumTeam_ScrumTeamID`)
+    REFERENCES `mydb`.`ScumTeam` (`ScrumTeamID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_SprintTeam_Sprint1`
+    FOREIGN KEY (`Sprint_idSprint`)
+    REFERENCES `mydb`.`Sprint` (`idSprint`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
