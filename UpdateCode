@@ -53,21 +53,15 @@ public class Sprint {
 					"______________________________________________________________________________________________________");
 			System.out.println("1. CRUD Stakeholder");
 			System.out.println("2. CRUD Scrum Team Members");
-			System.out.println("3. CRUD Sprint");
-			System.out.println("4. CRUD UserStory");
-			System.out.println("5. Quit");
-		/*	System.out.println("2. Add Scrum Team Members");
-			System.out.println("3. List Stakeholders");
-			System.out.println("4. List Scrum Team Members");
-			System.out.println("5. Create Sprint");
-			System.out.println("6. Create UserStory");
-			System.out.println("7. List Sprint");
-			System.out.println("8. List UserStory");
-			System.out.println("9. ");
-			System.out.println("10. Quit");
+			System.out.println("3. CRUD UserStory");
+			System.out.println("4. Create Sprint");
+			System.out.println("5. Add user stories to the backlog");
+			System.out.println("6. Features to operate user stories of backlog");
+                        System.out.println("7. List developer and Sprints");
+                        System.out.println("8. List developer that is part of a Sprint");
+                        System.out.println("9. Quit");
 			System.out.println("Enter Your Choice: ");
-			*/
-	        int options = input.nextInt();
+	                int options = input.nextInt();
 			System.out.print("\n");
 
 			switch (options) {
@@ -209,76 +203,6 @@ public class Sprint {
 				}
 				break;
 			case 3:
-				//List Sprint
-				System.out.println("1. Create Sprint");
-				System.out.println("2. Read Sprint");
-				System.out.println("3. Update Sprint");
-				System.out.println("4. Delete Sprint");
-				int opt3 = input.nextInt();
-				if(opt3 == 1){
-					try{
-						System.out.println("Making new Sprint... ");
-						System.out.println("Enter sprint id: ");
-						int idSprint = input.nextInt();
-						System.out.println("Enter start date of sprint: ");
-						String startDate = input.next();
-						System.out.println("Enter end date of sprint: ");
-						String endDate = input.next();
-						System.out.println("Enter status of sprint(finished/started): ");
-						String status = input.next();
-						String insert = "INSERT INTO Sprint(idSprint, startDate, endDate, status)"   		
-								+ "\nVALUES (?, ?, ?, ?)";
-						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
-						prep.setInt(1, idSprint);
-						prep.setString(2, startDate);
-						prep.setString(3, endDate);
-						prep.setString(4, status);
-						//executes prepare statement
-						prep.execute();
-						}
-					    catch (SQLException ex) {
-					        ex.printStackTrace();
-					    }
-				}
-				else if(opt3 == 2){
-					 try{
-				            stmnt = conn1.createStatement();
-				           //establishes results of the table
-				            ResultSet results = stmnt.executeQuery("select * from Sprint");
-				            ResultSetMetaData rsmd = results.getMetaData();
-				            int numberCols = rsmd.getColumnCount();
-				            for (int i=1; i<=numberCols; i++) {
-				                //printColumnNames
-				                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
-				            }
-				            System.out.println("\n------------------------------------------------------------------------");
-				//prints the table along with the recipe
-				            while(results.next())
-				            {
-				            	int idSprint = results.getInt(1); 
-				            	String startDate = results.getString(2);
-				                String endDate = results.getString(3);
-				                String status = results.getString(4);
-				                System.out.println(idSprint + "\t\t" + startDate + "\t\t" + endDate + "\t\t" + status);
-				            }
-				            results.close();
-				            stmnt.close();
-				        }
-				        catch (SQLException ex) {
-				            ex.printStackTrace();
-				        }	
-				}
-				else if(opt3 == 3){
-					
-				}
-				else if(opt3 == 4){
-					
-				}
-				else{
-					
-				}
-			    break;
-			case 4:
 				//List UserStory
 				System.out.println("1. Create UserStory");
 				System.out.println("2. Read UserStory");
@@ -344,10 +268,43 @@ public class Sprint {
 					
 				}
 				break;
+			case 4:
+					try{
+						System.out.println("Making new Sprint... ");
+						System.out.println("Enter sprint id: ");
+						int idSprint = input.nextInt();
+						System.out.println("Enter start date of sprint: ");
+						String startDate = input.next();
+						System.out.println("Enter end date of sprint: ");
+						String endDate = input.next();
+						System.out.println("Enter status of sprint(finished/started): ");
+						String status = input.next();
+						String insert = "INSERT INTO Sprint(idSprint, startDate, endDate, status)"   		
+								+ "\nVALUES (?, ?, ?, ?)";
+						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+						prep.setInt(1, idSprint);
+						prep.setString(2, startDate);
+						prep.setString(3, endDate);
+						prep.setString(4, status);
+						//executes prepare statement
+						prep.execute();
+						}
+					    catch (SQLException ex) {
+					        ex.printStackTrace();
+					    }
+
+			    break;
 			case 5:
-				//Add to sprint
-			shutdown();
-		    break;
+		        break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				break;
+			case 9:
+				shutdown();
+				break;
 			}
 		    System.out.println("Enter an option: ");
 			options = input.nextInt();
