@@ -1,0 +1,1970 @@
+// This program connects to Lamp Stack Server. Three variable names are used 
+
+package mypro;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Scanner;
+import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class pro {
+	// Enter database name, username, and password
+	private static String DBname = "mydb";
+	private static String DBusername = "root";
+	private static String DBpassword = "CECS323cecs";
+	
+	// Connection string
+	private static String dbURL1 = "jdbc:mysql://localhost:3306/" + DBname + "?user=" + DBusername + "&password=" + DBpassword;
+	
+	//private static String dbURL1 = "jdbc:mysql://192.168.189.134:3306/empDB?user=cecs323b&password=cecs323";
+	
+	//These connect to school server
+	//private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h10?user=cecs323h10&password=ae9aed";
+	//private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
+	
+	//private static String dbURL1 = "jdbc:mysql://localhost:3306/mydb?user=root&password=CECS323cecs";
+	private static Connection conn1 = null;
+	private static Statement stmnt = null;
+
+	public static void main(String[] args) {
+		CreateConnection();
+		SelectRoom();
+		shutdown();
+	}
+
+	// Create connection
+	private static void CreateConnection() {
+		try {
+			conn1 = DriverManager.getConnection(dbURL1);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static void SelectRoom() {
+		String cho;
+		Scanner un0 = new Scanner(System.in);
+
+		String username;
+		Scanner un1 = new Scanner(System.in);
+
+		String usernam;
+		Scanner un2 = new Scanner(System.in);
+
+		String userna;
+		Scanner un3 = new Scanner(System.in);
+
+		String usern;
+		Scanner un4 = new Scanner(System.in);
+		
+		String user;
+		Scanner un8 = new Scanner(System.in);
+
+		String use;
+		Scanner un7 = new Scanner(System.in);
+
+		String us;
+		Scanner un5 = new Scanner(System.in);
+		
+		String u;
+		Scanner un9 = new Scanner(System.in);
+
+		String ans;
+		Scanner un6 = new Scanner(System.in);
+		
+		String recx[] = new String[100];
+		String recti[] = new String[100];
+
+		int num1;
+		int w;
+		int re;
+
+		cho = "0";
+		do {
+			// menu
+			System.out.println("\n\nManage Records Menu");
+			System.out.println(
+					"______________________________________________________________________________________________________");
+			System.out.println("1. List all SprintTeams information");
+			System.out.println("2. List a team name and its meetings on a date range");
+			System.out.println("3. List a meeting details");
+			System.out.println("4. List all room's status on particular day");
+			System.out.println("5. Reserve a room for a team");
+			System.out.println("6. Insert a conference room and update all bookings from 1 conference room to this new conference room");
+			System.out.println("7. List meetings for 1 of the 4 purposes, between 1 particular date to another date");
+			System.out.println("8. Insert a new software development team");
+			System.out.println("9. Quit");
+			System.out.println("10. Print Sprint");
+			System.out.println("11. Print BackLog");
+			System.out.println("12. Create Sprint");
+			System.out.println("13. Create BackLog");
+			System.out.println("0. Enter at anytime to return to this main menu");
+			System.out.println("Enter Your Choice: ");
+			cho = un0.next();
+			System.out.print("\n\n");
+
+			switch (cho) {
+			
+			// 1. List all teams information
+			case "1":
+				// Query for all teams information
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from SprintTeam");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println(
+							"\n-------------------------------------------------------------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						System.out
+								.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t" + recipeN);
+					}
+					results.close();
+					stmnt.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// Displays if table is empty
+				if (num1 == 1) {
+					System.out.println("No Software Teams exist.");
+				}
+
+				break;
+				
+			case "10":
+				// Query for all teams information
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Sprint");
+					//ResultSetMetaData rsmd = results.getMetaData();
+					//int numberCols = rsmd.getColumnCount();
+					/*
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					*/
+					System.out.print("ID /t/t As a /t/t I want to /t/t because/ so that /t/t priority /t/t Assigned /t/t Status /t/t class");
+					System.out.println(
+							"\n-------------------------------------------------------------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						String recip = results.getString(6);
+						String reci = results.getString(7);
+						String rec = results.getString(8);
+						System.out
+								.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t" + recipeN + "\t\t\t\t" + recipe + "\t\t\t" + recip + "\t\t" + reci + "/t/t" + rec);
+					}
+					results.close();
+					stmnt.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// Displays if table is empty
+				if (num1 == 1) {
+					System.out.println("No Software Teams exist.");
+				}
+
+				break;
+
+			case "11":
+				// Query for all teams information
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from BackLog");
+					//ResultSetMetaData rsmd = results.getMetaData();
+					//int numberCols = rsmd.getColumnCount();
+					/*
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					*/
+					System.out.print("ID /t/t As a /t/t I want to /t/t because/ so that /t/t priority /t/t Assigned /t/t Status /t/t class");
+					System.out.println(
+							"\n-------------------------------------------------------------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						String recip = results.getString(6);
+						String reci = results.getString(7);
+						String rec = results.getString(8);
+						System.out
+								.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t" + recipeN + "\t\t\t\t" + recipe + "\t\t\t" + recip + "\t\t" + reci + "/t/t" + rec);
+					}
+					results.close();
+					stmnt.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// Displays if table is empty
+				if (num1 == 1) {
+					System.out.println("No Software Teams exist.");
+				}
+
+				break;
+
+			case "12":
+				// gives user a list of software teams to choose from by index to enter
+				num1 = 1;
+				w = 0;
+				//recx[] = new String[100];
+				for (int i = 0; i < 100; i++) {
+					recx[i] = "";
+				}
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Team");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						recx[w] = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						System.out.println(
+								w + "\t\t" + recx[w] + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t" + recipeN);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Teams exist");
+					break;
+				}
+				
+				// asks for user input on software team index
+				while (true) {
+					System.out.println("Enter Team Index Number: ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+
+					if (re >= w) {
+						System.out.println("Team index Number does not exist, try again.");
+						continue;
+					}
+					username = recx[re];
+					break;
+				}
+
+				// Condition from earlier to return to menu when table is empty
+				if (num1 == 1) {
+					break;
+				}
+
+				// List of conference rooms for user to choose from
+				num1 = 1;
+				w = 0;
+				//String recti[] = new String[100];
+				for (int i = 0; i < 100; i++) {
+					recti[i] = "";
+				}
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from ConferenceRoom");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						recti[w] = results.getString(1);
+
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						System.out.println(w + "\t\t" + recti[w] + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t"
+								+ recipeN + "\t\t" + recipe);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Rooms exist");
+					break;
+				}
+				
+				// Asks for user input for conference room index
+				while (true) {
+					System.out.println("Enter Priority(1-10): ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+/*
+					if (us<'1' || us>'9') {
+						System.out.println("not in range, try again.");
+						continue;
+					}*/
+					//usernam = recti[re];
+					break;
+				}
+				user = us;
+				// returns to menu if sql table is empty
+				//if (num1 == 1) {
+					//break;
+				//}
+
+				// asks for date
+				//while (true) {
+					System.out.println("I want to: ");
+					userna = un3.next();
+					
+					System.out.println("because/ so that: ");
+					userna = un3.next();
+/*
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(userna);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					*/
+				//	break;
+				//}
+/*
+				// checks if team has already scheduled a meeting for that day
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select Date from Meeting where SoftwareTeamName='"
+							+ username + "' and Date='" + userna + "'");
+					while (results.next()) {
+						String recipeName = results.getString(1);
+						if (userna.equals(recipeName)) {
+							num1 = 0;
+						}
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+				//returns to menu if meeting date already exists
+				if (num1 == 0) {
+					System.out.println("Team Has already scheduled a meeting that day.\nNo changes have been made.");
+					break;
+				}
+
+				// checks if room is already reserved
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery(
+							"select Date from Meeting where RoomName='" + usernam + "' and Date='" + userna + "'");
+					while (results.next()) {
+						String recipeName = results.getString(1);
+						if (userna.equals(recipeName)) {
+							num1 = 0;
+						}
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+				// returns to menu if room is already reserved
+				if (num1 == 0) {
+					System.out.println("Room is already reserved.\nNo changes have been made.");
+					break;
+				}
+*/
+				while (true) {
+					System.out.println("1. developer\n2. user\n");
+					System.out.println("As a?: ");
+					usern = un4.next();
+					if (!((usern.equals("1") || usern.equals("2") || usern.equals("3")))) {
+						System.out.println("Valid choices are 1, 2, 3, 4\nPlease enter choice again\n");
+					} else {
+						if (usern.equals("1"))
+							usern = "developer";
+						if (usern.equals("2"))
+							usern = "user";
+						if (usern.equals("3"))
+							usern = "Not Started";
+						if (usern.equals("4"))
+							usern = "Other";
+						break;
+					}
+				}
+				usernam = usern;
+				
+				
+				
+				// user chooses number for project purpose and input is put into a string.
+				while (true) {
+					System.out.println("1. OnGoing\n2. Done\n3. Not Started");
+					System.out.println("Enter Project Status: ");
+					usern = un4.next();
+					if (!((usern.equals("1") || usern.equals("2") || usern.equals("3")))) {
+						System.out.println("Valid choices are 1, 2, 3, 4\nPlease enter choice again\n");
+					} else {
+						if (usern.equals("1"))
+							usern = "On Going";
+						if (usern.equals("2"))
+							usern = "Done";
+						if (usern.equals("3"))
+							usern = "Not Started";
+						if (usern.equals("4"))
+							usern = "Other";
+						break;
+					}
+				}
+				us = usern;
+/*
+				// displays user input and asks if correct
+				System.out.println("SoftwareTeamName \t\tRoomName \t\tDate \t\tPurposeOfMeeting");
+				System.out.println("\n----------------------------------------------------------------------------");
+				System.out.println(username + "\t\t\t\t" + usernam + "\t\t\t" + userna + "\t" + usern);
+
+				System.out.println("\nAre you sure you want to continue (type: yes or no)?: ");
+				ans = un6.next();
+				// returns to menu if user says no
+				if (!(ans.equals("yes"))) {
+					System.out.println("OK. No changes have been made.");
+					break;
+				}
+*/
+				
+				while (true) {
+					System.out.println("1. local database\n2. CV request\n3. GUI\n4. Volume/Issue\n");
+					System.out.println("As a?: ");
+					usern = un4.next();
+					if (!((usern.equals("1") || usern.equals("2") || usern.equals("3")))) {
+						System.out.println("Valid choices are 1, 2, 3, 4\nPlease enter choice again\n");
+					} else {
+						if (usern.equals("1"))
+							usern = "developer";
+						if (usern.equals("2"))
+							usern = "user";
+						if (usern.equals("3"))
+							usern = "Not Started";
+						if (usern.equals("4"))
+							usern = "Other";
+						break;
+					}
+				}
+				u = usern;
+				
+				// data is stored into database
+				try {
+					PreparedStatement posted = conn1.prepareStatement(
+							"INSERT INTO Sprint VALUES(" + w+1 + ", '" + usernam + "', '" + userna + "','" + usern + "','" + user + "', '" + username + "', '" + us + "','" + u + "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nRoom has been RESERVED.");
+
+				break;
+				
+				// 8. Insert a new software development team
+			case "13":
+				// Makes sure user does not enter an existing team
+				do {
+					System.out.println("Enter Team Name: ");
+					username = un1.next();
+					num1 = 1;
+					try {
+						stmnt = conn1.createStatement();
+						ResultSet results = stmnt.executeQuery("select SoftwareTeamName from Softwareteam");
+						while (results.next()) {
+							String recipeName = results.getString(1);
+							if (username.equals(recipeName)) {
+								System.out.println("Team Name Taken. Please enter a different name");
+								num1 = 0;
+							}
+						}
+						results.close();
+						stmnt.close();
+
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+				} while (num1 == 0);
+
+				System.out.println("Enter Team Leader: ");
+				usernam = un2.next();
+
+				// Only accepts dates of database requirements
+				while (true) {
+					System.out.println("Enter Team Formed Date (yyyy-mm-dd): ");
+					userna = un3.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+					try {
+						dateF.parse(userna);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				System.out.println("Enter Project Name: ");
+				usern = un4.next();
+
+				// Check with user before executing changes
+				System.out.println("Software Team Name \t\tTeam Leader \t\t\tTeam Formed Date \t\tProject Name");
+				System.out.println("\n----------------------------------------------------------------------------");
+				System.out.println(username + "\t\t\t\t" + usernam + "\t\t\t\t" + userna + "\t\t\t\t" + usern);
+
+				System.out.println("\nAre you sure you want to continue (type: yes or no)?: ");
+				ans = un6.next();
+				if (!(ans.equals("yes"))) {
+					System.out.println("OK. No changes have been made.");
+					break;
+				}
+
+				// changes stored in database
+				try {
+					PreparedStatement posted = conn1.prepareStatement(
+							"INSERT INTO Softwareteam (SoftwareTeamName, TeamLeader, TeamFormedDate, ProjectName) VALUES('"
+									+ username + "', '" + usernam + "', '" + userna + "','" + usern + "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nNew Team ADDED.");
+
+				break;
+
+				
+				// 2. List a team name and its meetings on a date range
+			case "2":
+				
+				num1 = 1;
+				w = 0;
+				String rec[] = new String[100];
+				
+				// initialize array to be sure all elements are NULL
+				for (int i = 0; i < 100; i++) {
+					rec[i] = "";
+				}
+
+				// Lists all meetings and asks user for integer index
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Softwareteam");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						rec[w] = results.getString(1);
+
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						System.out.println(
+								w + "\t\t" + rec[w] + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t" + recipeN);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Meeting schedules exist");
+					break;
+				}
+				
+				// Checks and Converts user input string to number
+				while (true) {
+					System.out.println("Enter Team Index Number: ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+
+					if (re >= w) {
+						System.out.println("Team index Number does not exist, try again.");
+						continue;
+					}
+					username = rec[re];
+					break;
+				}
+
+				// condition created in loop above where it returns to menu if sql table is empty
+				if (num1 == 1) {
+					break;
+				}
+
+				// Only accepts dates in sql format
+				while (true) {
+					System.out.println("Enter Starting Date (yyyy-mm-dd): ");
+					usernam = un2.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(usernam);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				while (true) {
+					System.out.println("Enter Ending Date (yyyy-mm-dd): ");
+					userna = un3.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(userna);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				// executes query
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Meeting where SoftwareTeamName='" + username
+							+ "' and Date>='" + usernam + "' and Date<='" + userna + "'");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						System.out.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t" + recipeN);
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// displays if nothing is returned from sql query
+				if (num1 == 1) {
+					System.out.println("Team Name has no meetings on date range");
+				}
+
+				break;
+
+				// 3. List a meeting details
+			case "3":
+				// Allows user to choose index number for conference room
+				num1 = 1;
+				w = 0;
+				String rect[] = new String[100];
+				for (int i = 0; i < 100; i++) {
+					rect[i] = "";
+				}
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from ConferenceRoom");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						rect[w] = results.getString(1);
+
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						System.out.println(w + "\t\t" + rect[w] + "\t\t\t\t" + recipeNam + "\t\t" + recipeNa + "\t\t\t"
+								+ recipeN + "\t\t" + recipe);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Rooms exist");
+					break;
+				}
+				
+				// asks for user input on conference room index
+				while (true) {
+					System.out.println("Enter Room Index Number: ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+
+					if (re >= w) {
+						System.out.println("Room index Number does not exist, try again.");
+						continue;
+					}
+					username = rect[re];
+					break;
+				}
+
+				// Condition from earlier, returns to menu if sql table is empty
+				if (num1 == 1) {
+					break;
+				}
+
+				// asks for date
+				while (true) {
+					System.out.println("Enter Team Meeting Date (yyyy-mm-dd): ");
+					usernam = un2.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(usernam);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				// Query criteria
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery(
+							"select * from Meeting where RoomName='" + username + "' and Date='" + usernam + "'");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						System.out.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t" + recipeN);
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1)
+					System.out.println("No Meeting by the Room Name and Date given.");
+				break;
+
+				// 4. List all room's status on particular day
+			case "4": {
+				String recipeName = "";
+				String recipeNa[] = new String[100];
+				for (int i = 0; i < 100; i++) {
+					recipeNa[i] = "";
+				}
+				int j = 0;
+
+				// ask for date
+				while (true) {
+					System.out.println("Enter Date (yyyy-mm-dd): ");
+					usernam = un2.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(usernam);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				// finds all occupied rooms
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select RoomName from Meeting where Date='" + usernam + "'");
+					while (results.next()) {
+						recipeNa[j] = results.getString(1);
+						j++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// performs brute force search through each conference room to find vacancies
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select RoomName from ConferenceRoom");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\tStatus");
+					}
+					System.out.println("\n-------------------------------------");
+					boolean bv = false;
+					while (results.next()) {
+						recipeName = results.getString(1);
+						for (int i = 0; i < j; i++) {
+							if (recipeNa[i].equals(recipeName)) {
+								System.out.print(recipeName + "\t\t\t");
+								System.out.println("Occupied");
+								bv = true;
+							}
+						}
+						if (bv == false) {
+							System.out.print(recipeName + "\t\t\t");
+							System.out.println("Vacant");
+						}
+						bv = false;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				break;
+			}
+			
+			// 5. Reserve a room for a team
+			case "5":
+				// gives user a list of software teams to choose from by index to enter
+				num1 = 1;
+				w = 0;
+				
+				for (int i = 0; i < 100; i++) {
+					recx[i] = "";
+				}
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Softwareteam");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						recx[w] = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						System.out.println(
+								w + "\t\t" + recx[w] + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t" + recipeN);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Meeting schedules exist");
+					break;
+				}
+				
+				// asks for user input on software team index
+				while (true) {
+					System.out.println("Enter Team Index Number: ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+
+					if (re >= w) {
+						System.out.println("Team index Number does not exist, try again.");
+						continue;
+					}
+					username = recx[re];
+					break;
+				}
+
+				// Condition from earlier to return to menu when table is empty
+				if (num1 == 1) {
+					break;
+				}
+
+				// List of conference rooms for user to choose from
+				num1 = 1;
+				w = 0;
+				
+				for (int i = 0; i < 100; i++) {
+					recti[i] = "";
+				}
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from ConferenceRoom");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						recti[w] = results.getString(1);
+
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						System.out.println(w + "\t\t" + recti[w] + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t"
+								+ recipeN + "\t\t" + recipe);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Rooms exist");
+					break;
+				}
+				
+				// Asks for user input for conference room index
+				while (true) {
+					System.out.println("Enter Room Index Number: ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+
+					if (re >= w) {
+						System.out.println("Room index Number does not exist, try again.");
+						continue;
+					}
+					usernam = recti[re];
+					break;
+				}
+
+				// returns to menu if sql table is empty
+				if (num1 == 1) {
+					break;
+				}
+
+				// asks for date
+				while (true) {
+					System.out.println("Enter Meeting Date (yyyy-mm-dd): ");
+					userna = un3.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(userna);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				// checks if team has already scheduled a meeting for that day
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select Date from Meeting where SoftwareTeamName='"
+							+ username + "' and Date='" + userna + "'");
+					while (results.next()) {
+						String recipeName = results.getString(1);
+						if (userna.equals(recipeName)) {
+							num1 = 0;
+						}
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+				//returns to menu if meeting date already exists
+				if (num1 == 0) {
+					System.out.println("Team Has already scheduled a meeting that day.\nNo changes have been made.");
+					break;
+				}
+
+				// checks if room is already reserved
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery(
+							"select Date from Meeting where RoomName='" + usernam + "' and Date='" + userna + "'");
+					while (results.next()) {
+						String recipeName = results.getString(1);
+						if (userna.equals(recipeName)) {
+							num1 = 0;
+						}
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+				// returns to menu if room is already reserved
+				if (num1 == 0) {
+					System.out.println("Room is already reserved.\nNo changes have been made.");
+					break;
+				}
+
+				// user chooses number for project purpose and input is put into a string.
+				while (true) {
+					System.out.println("1. Planning\n2. Demo\n3. Team Working Session\n4. Other");
+					System.out.println("Enter Project Purpose: ");
+					usern = un4.next();
+					if (!((usern.equals("1") || usern.equals("2") || usern.equals("3") || usern.equals("4")))) {
+						System.out.println("Valid choices are 1, 2, 3, 4\nPlease enter choice again\n");
+					} else {
+						if (usern.equals("1"))
+							usern = "Planning";
+						if (usern.equals("2"))
+							usern = "Demo";
+						if (usern.equals("3"))
+							usern = "Team Working Session";
+						if (usern.equals("4"))
+							usern = "Other";
+						break;
+					}
+				}
+
+				// displays user input and asks if correct
+				System.out.println("SoftwareTeamName \t\tRoomName \t\tDate \t\tPurposeOfMeeting");
+				System.out.println("\n----------------------------------------------------------------------------");
+				System.out.println(username + "\t\t\t\t" + usernam + "\t\t\t" + userna + "\t" + usern);
+
+				System.out.println("\nAre you sure you want to continue (type: yes or no)?: ");
+				ans = un6.next();
+				// returns to menu if user says no
+				if (!(ans.equals("yes"))) {
+					System.out.println("OK. No changes have been made.");
+					break;
+				}
+
+				// data is stored into database
+				try {
+					PreparedStatement posted = conn1.prepareStatement(
+							"INSERT INTO Meeting (SoftwareTeamName, RoomName, Date, PurposeOfMeeting) VALUES('"
+									+ username + "', '" + usernam + "', '" + userna + "','" + usern + "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nRoom has been RESERVED.");
+
+				break;
+
+				// 6. Insert a conference room and update all bookings from 1 conference room to this new conference room");
+			case "6":
+				num1 = 1;
+				w = 0;
+				String recta[] = new String[100];
+				for (int i = 0; i < 100; i++) {
+					recta[i] = "";
+				}
+				// creates list of conference rooms for user to choose
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from ConferenceRoom");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						recta[w] = results.getString(1);
+
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						System.out.println(w + "\t\t" + recta[w] + "\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t\t"
+								+ recipeN + "\t\t" + recipe);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Rooms exist");
+					break;
+				}
+				
+				// takes user input
+				while (true) {
+					System.out.println("Enter Old Room Index Number: ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+
+					if (re >= w) {
+						System.out.println("Room index Number does not exist, try again.");
+						continue;
+					}
+					us = recta[re];
+					break;
+				}
+
+				// returns to menu if sql table is empty
+				if (num1 == 1) {
+					break;
+				}
+
+				// takes user input and makes sure name isn't already in database
+				do {
+					System.out.println("Enter New Room Name: ");
+					username = un1.next();
+
+					num1 = 1;
+					try {
+						stmnt = conn1.createStatement();
+						ResultSet results = stmnt.executeQuery("select RoomName from ConferenceRoom");
+						while (results.next()) {
+							String recipeName = results.getString(1);
+							if (username.equals(recipeName)) {
+								System.out.println("Name Taken. Please enter a different name");
+								num1 = 0;
+							}
+						}
+						results.close();
+						stmnt.close();
+
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+				} while (num1 == 0);
+
+				System.out.println("Enter New Room Number: ");
+				usernam = un2.next();
+				System.out.println("Enter New Room Building Name: ");
+				userna = un3.next();
+				System.out.println("Enter New Room Phone Number: ");
+				usern = un4.next();
+				System.out.println("Enter New Room Projector Type: ");
+				use = un5.next();
+
+				// display old room
+				System.out.println("\nOld Room:");
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery(
+							"SELECT RoomName, RoomNumber, BuildingName, RoomPhone, ProjectorType FROM ConferenceRoom WHERE RoomName='"
+									+ us + "'");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out
+							.println("\n----------------------------------------------------------------------------");
+					while (results.next()) {
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						System.out.println(recipeName + "\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t\t" + recipeN
+								+ "\t\t" + recipe);
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// display new room
+				System.out.println("\nNew Room:");
+				System.out.println("Room Name \t\tNumber \t\t\tBuilding Name \t\tPhone Number \t\tProjector Type");
+				System.out.println("\n----------------------------------------------------------------------------");
+				System.out.println(username + "\t\t\t" + usernam + "\t\t\t" + userna + "\t\t\t" + usern + "\t\t" + use);
+
+				// ask user if input is correct
+				System.out.println("\nAre you sure you want to REMOVE and REPLACE old room (type: yes or no)?: ");
+				ans = un6.next();
+				
+				// returns to menu if user says no
+				if (!(ans.equals("yes"))) {
+					System.out.println("OK. No changes have been made.");
+					break;
+				}
+
+				// updates are performed
+				try {
+
+					PreparedStatement posted = conn1.prepareStatement(
+							"INSERT INTO ConferenceRoom (RoomName, RoomNumber, BuildingName, RoomPhone, ProjectorType) VALUES('"
+									+ username + "', '" + usernam + "', '" + userna + "','" + usern + "','" + us
+									+ "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				try {
+					PreparedStatement posted = conn1.prepareStatement(
+							"UPDATE Meeting SET RoomName='" + username + "' WHERE RoomName='" + us + "'");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				try {
+					PreparedStatement posted = conn1
+							.prepareStatement("DELETE FROM ConferenceRoom WHERE RoomName='" + us + "'");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nUpdates have been completed.");
+
+				break;
+
+				// 7. List meetings for 1 of the 4 purposes, between 1 particular date to another date");
+			case "7":
+				// assigns string to user integer input
+				while (true) {
+					System.out.println("1. Planning\n2. Demo\n3. Team Working Session\n4. Other");
+					System.out.println("Enter Project Purpose: ");
+					username = un1.next();
+					if (!((username.equals("1") || username.equals("2") || username.equals("3")
+							|| username.equals("4")))) {
+						System.out.println("Valid choices are 1, 2, 3, 4\nPlease enter choice again\n");
+					} else {
+						if (username.equals("1"))
+							username = "Planning";
+						if (username.equals("2"))
+							username = "Demo";
+						if (username.equals("3"))
+							username = "Team Working Session";
+						if (username.equals("4"))
+							username = "Other";
+						break;
+					}
+				}
+
+				// checks if the meeting purpose exists
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery(
+							"select PurposeOfMeeting from Meeting WHERE PurposeOfMeeting='" + username + "'");
+					while (results.next()) {
+						num1 = 0;
+						break;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No meetings by that Purpose are scheduled.");
+					break;
+				}
+
+				// Only allows dates in proper sql format
+				while (true) {
+					System.out.println("Enter Start Date (yyyy-mm-dd): ");
+					usernam = un2.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(usernam);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				while (true) {
+					System.out.println("Enter End Date (yyyy-mm-dd): ");
+					userna = un3.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+
+					try {
+						dateF.parse(userna);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				// Prints users query if output exists
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Meeting WHERE Date>='" + usernam
+							+ "' and Date<='" + userna + "' and PurposeOfMeeting='" + username + "'");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						System.out.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t" + recipeN);
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// Statements appears when user input returns null
+				if (num1 == 1) {
+					System.out.println("No meetings by that Date.");
+				}
+
+				break;
+
+				// 8. Insert a new software development team
+			case "8":
+				// Makes sure user does not enter an existing team
+				do {
+					System.out.println("Enter Team Name: ");
+					username = un1.next();
+					num1 = 1;
+					try {
+						stmnt = conn1.createStatement();
+						ResultSet results = stmnt.executeQuery("select SoftwareTeamName from Softwareteam");
+						while (results.next()) {
+							String recipeName = results.getString(1);
+							if (username.equals(recipeName)) {
+								System.out.println("Team Name Taken. Please enter a different name");
+								num1 = 0;
+							}
+						}
+						results.close();
+						stmnt.close();
+
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+				} while (num1 == 0);
+
+				System.out.println("Enter Team Leader: ");
+				usernam = un2.next();
+
+				// Only accepts dates of database requirements
+				while (true) {
+					System.out.println("Enter Team Formed Date (yyyy-mm-dd): ");
+					userna = un3.next();
+
+					SimpleDateFormat dateF = new SimpleDateFormat("yyyy-MM-dd");
+					dateF.setLenient(false);
+					try {
+						dateF.parse(userna);
+					} catch (ParseException e) {
+						System.out.println("Invalid date input. Try again.");
+						continue;
+					}
+					break;
+				}
+
+				System.out.println("Enter Project Name: ");
+				usern = un4.next();
+
+				// Check with user before executing changes
+				System.out.println("Software Team Name \t\tTeam Leader \t\t\tTeam Formed Date \t\tProject Name");
+				System.out.println("\n----------------------------------------------------------------------------");
+				System.out.println(username + "\t\t\t\t" + usernam + "\t\t\t\t" + userna + "\t\t\t\t" + usern);
+
+				System.out.println("\nAre you sure you want to continue (type: yes or no)?: ");
+				ans = un6.next();
+				if (!(ans.equals("yes"))) {
+					System.out.println("OK. No changes have been made.");
+					break;
+				}
+
+				// changes stored in database
+				try {
+					PreparedStatement posted = conn1.prepareStatement(
+							"INSERT INTO Softwareteam (SoftwareTeamName, TeamLeader, TeamFormedDate, ProjectName) VALUES('"
+									+ username + "', '" + usernam + "', '" + userna + "','" + usern + "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nNew Team ADDED.");
+
+				break;
+
+			case "9":
+				System.out.println("Goodbye!");
+				break;
+
+			default:
+				System.out.println("Valid choices are 1, 2, 3, 4, 5, 6, 7, 8, 9");
+			}
+		} while (!cho.equals("9"));
+		
+		// Close Scanners declared earlier
+		un0.close();
+		un1.close();
+		un2.close();
+		un3.close();
+		un4.close();
+		un5.close();
+		un6.close();
+		un7.close();
+		un8.close();
+		un9.close();
+	}
+
+	// Terminate connection at end
+	private static void shutdown() {
+		try {
+			if (stmnt != null) {
+				stmnt.close();
+			}
+			if (conn1 != null) {
+				conn1 = DriverManager.getConnection(dbURL1 + "shutdown=true");
+				conn1.close();
+			}
+		} catch (SQLException slqEx) {
+
+		}
+	}
+}
+
+/*
+
+package mypro;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Scanner;
+import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class pro {
+	private static String dbURL1 = "jdbc:mysql://localhost:3306/termproject?user=root&password=CECS323cecs";
+	//private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
+	private static Connection conn1 = null;
+	private static Statement stmnt = null;
+
+	public static void main(String[] args) {
+		CreateConnection();
+		SelectRoom();
+		shutdown();
+	}
+
+	// Create connection
+	private static void CreateConnection() {
+		try {
+			conn1 = DriverManager.getConnection(dbURL1);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static void SelectRoom() {
+		String cho;
+		Scanner u = new Scanner(System.in);
+
+		String username;
+		Scanner un1 = new Scanner(System.in);
+
+		String usernam;
+		Scanner un2 = new Scanner(System.in);
+
+		String userna;
+		Scanner un3 = new Scanner(System.in);
+
+		int num1;
+
+		cho = "0";
+		do {
+			// menu
+			System.out.println("\n\nManage Records Menu");
+			System.out.println(
+					"______________________________________________________________________________________________________");
+			System.out.println("1. List all teams information");
+			//System.out.println("2. List a team name and its meetings on a date range");
+			System.out.println("2. show all sprints");
+			System.out.println("3. List a meeting details");
+			System.out.println("4. List all room's status on particular day");
+			System.out.println("5. Reserve a room for a team");
+			System.out.println("6. Insert a conference room and update all bookings from 1 conference room to this new conference room");
+			System.out.println("7. List meetings for 1 of the 4 purposes, between 1 particular date to another date");
+			System.out.println("8. Insert a new software development team");
+			System.out.println("9. Quit");
+			System.out.println("Enter Your Choice: ");
+			cho = u.next();
+			System.out.print("\n\n");
+
+			switch (cho) {
+			
+			// 1. List all teams information
+			case "1":
+				// Query for all teams information
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from Team");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println(
+							"\n-------------------------------------------------------------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						System.out
+								.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t" + recipeNa);
+					}
+					results.close();
+					stmnt.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// Displays if table is empty
+				if (num1 == 1) {
+					System.out.println("No Software Teams exist. Choose option 8 to create one.");
+				}
+
+				break;
+
+			case "2":
+				// Query for all teams information
+				num1 = 1;
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from SprintBackLog");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println(
+							"\n-------------------------------------------------------------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						System.out
+								.println(recipeName + "\t\t\t\t" + recipeNam + "\t\t" + recipeNa);
+					}
+					results.close();
+					stmnt.close();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// Displays if table is empty
+				if (num1 == 1) {
+					System.out.println("No sprint created");
+				}
+
+				break;
+
+			case "3":
+				num1 = 1;
+				w = 0;
+				recta[] = new String[100];
+				for (int i = 0; i < 100; i++) {
+					recta[i] = "";
+				}
+				// creates list of conference rooms for user to choose
+				try {
+					num1 = 1;
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery("select * from ConferenceRoom");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					System.out.print("Index#\t\t");
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out.println("\n-------------------------------------");
+					while (results.next()) {
+						num1 = 0;
+						recta[w] = results.getString(1);
+
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						System.out.println(w + "\t\t" + recta[w] + "\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t\t"
+								+ recipeN + "\t\t" + recipe);
+						w++;
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				if (num1 == 1) {
+					System.out.println("No Rooms exist");
+					break;
+				}
+				
+				// takes user input
+				while (true) {
+					System.out.println("Enter Old Room Index Number: ");
+					us = un1.next();
+					try {
+						re = Integer.parseInt(us);
+					} catch (NumberFormatException e) {
+						System.out.println("Entry not number, try again.");
+						continue;
+					}
+
+					if (re >= w) {
+						System.out.println("Room index Number does not exist, try again.");
+						continue;
+					}
+					us = recta[re];
+					break;
+				}
+
+				// returns to menu if sql table is empty
+				if (num1 == 1) {
+					break;
+				}
+
+				// takes user input and makes sure name isn't already in database
+				do {
+					System.out.println("Enter New Room Name: ");
+					username = un1.next();
+
+					num1 = 1;
+					try {
+						stmnt = conn1.createStatement();
+						ResultSet results = stmnt.executeQuery("select RoomName from ConferenceRoom");
+						while (results.next()) {
+							String recipeName = results.getString(1);
+							if (username.equals(recipeName)) {
+								System.out.println("Name Taken. Please enter a different name");
+								num1 = 0;
+							}
+						}
+						results.close();
+						stmnt.close();
+
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+				} while (num1 == 0);
+
+				System.out.println("Enter New Room Number: ");
+				usernam = un2.next();
+				System.out.println("Enter New Room Building Name: ");
+				userna = un3.next();
+				System.out.println("Enter New Room Phone Number: ");
+				usern = un4.next();
+				System.out.println("Enter New Room Projector Type: ");
+				use = un5.next();
+
+				// display old room
+				System.out.println("\nOld Room:");
+				try {
+					stmnt = conn1.createStatement();
+					ResultSet results = stmnt.executeQuery(
+							"SELECT RoomName, RoomNumber, BuildingName, RoomPhone, ProjectorType FROM ConferenceRoom WHERE RoomName='"
+									+ us + "'");
+					ResultSetMetaData rsmd = results.getMetaData();
+					int numberCols = rsmd.getColumnCount();
+					for (int i = 1; i <= numberCols; i++) {
+						System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+					}
+					System.out
+							.println("\n----------------------------------------------------------------------------");
+					while (results.next()) {
+						String recipeName = results.getString(1);
+						String recipeNam = results.getString(2);
+						String recipeNa = results.getString(3);
+						String recipeN = results.getString(4);
+						String recipe = results.getString(5);
+						System.out.println(recipeName + "\t\t\t" + recipeNam + "\t\t\t" + recipeNa + "\t\t\t" + recipeN
+								+ "\t\t" + recipe);
+					}
+					results.close();
+					stmnt.close();
+
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				// display new room
+				System.out.println("\nNew Room:");
+				System.out.println("Room Name \t\tNumber \t\t\tBuilding Name \t\tPhone Number \t\tProjector Type");
+				System.out.println("\n----------------------------------------------------------------------------");
+				System.out.println(username + "\t\t\t" + usernam + "\t\t\t" + userna + "\t\t\t" + usern + "\t\t" + use);
+
+				// ask user if input is correct
+				System.out.println("\nAre you sure you want to REMOVE and REPLACE old room (type: yes or no)?: ");
+				ans = un6.next();
+				
+				// returns to menu if user says no
+				if (!(ans.equals("yes"))) {
+					System.out.println("OK. No changes have been made.");
+					break;
+				}
+
+				// updates are performed
+				try {
+
+					PreparedStatement posted = conn1.prepareStatement(
+							"INSERT INTO ConferenceRoom (RoomName, RoomNumber, BuildingName, RoomPhone, ProjectorType) VALUES('"
+									+ username + "', '" + usernam + "', '" + userna + "','" + usern + "','" + us
+									+ "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				try {
+					PreparedStatement posted = conn1.prepareStatement(
+							"UPDATE Meeting SET RoomName='" + username + "' WHERE RoomName='" + us + "'");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				try {
+					PreparedStatement posted = conn1
+							.prepareStatement("DELETE FROM ConferenceRoom WHERE RoomName='" + us + "'");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nUpdates have been completed.");
+
+				break;
+
+				
+				// 8. Insert a new software development team
+			case "8":
+				// Makes sure user does not enter an existing team
+				do {
+					System.out.println("Enter ScrumTeamMemberName: ");
+					username = un1.next();
+					num1 = 1;
+					try {
+						stmnt = conn1.createStatement();
+						ResultSet results = stmnt.executeQuery("select ScrumTeamMemberName from Team");
+						while (results.next()) {
+							String recipeName = results.getString(1);
+							if (username.equals(recipeName)) {
+								System.out.println("Team Name Taken. Please enter a different name");
+								num1=0;
+							}
+						}
+						results.close();
+						stmnt.close();
+
+					} catch (SQLException ex) {
+						ex.printStackTrace();
+					}
+				} while (num1 == 0);
+
+				System.out.println("Enter StakeholderName: ");
+				usernam = un2.next();
+
+				System.out.println("Enter Roles: ");
+				userna = un3.next();
+
+				// changes stored in database
+				try {
+					PreparedStatement posted = conn1.prepareStatement("INSERT INTO Team VALUES('" + username + "', '" + usernam + "', '" +userna + "')");
+					posted.executeUpdate();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+
+				System.out.println("\nNew Team ADDED.");
+
+				break;
+
+			case "9":
+				System.out.println("Goodbye!");
+				break;
+
+			default:
+				System.out.println("Valid choices are 1, 2, 3, 4, 5, 6, 7, 8, 9");
+			}
+		} while (!cho.equals("9"));
+		
+		// Close Scanners declared earlier
+		u.close();
+		un1.close();
+		un2.close();
+		un3.close();
+
+	}
+
+	// Terminate connection at end
+	private static void shutdown() {
+		try {
+			if (stmnt != null) {
+				stmnt.close();
+			}
+			if (conn1 != null) {
+				conn1 = DriverManager.getConnection(dbURL1 + "shutdown=true");
+				conn1.close();
+			}
+		} catch (SQLException slqEx) {
+
+		}
+	}
+}
+
+*/
