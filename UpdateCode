@@ -23,14 +23,14 @@ public class Sprint {
 	//private static String dbURL1 = "jdbc:mysql://192.168.189.134:3306/empDB?user=cecs323b&password=cecs323";
 	
 	//These connect to school server
-	private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h10?user=cecs323h10&password=ae9aed";
+	private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h26?user=cecs323h26&password=ahse5o";
 	//private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
 	
 	//private static String dbURL1 = "jdbc:mysql://localhost:3306/mydb?user=root&password=CECS323cecs";
 	private static Connection conn1 = null;
 	private static Statement stmnt = null;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		CreateConnection();
 		SelectOption();
 		shutdown();
@@ -45,7 +45,7 @@ public class Sprint {
 		}
 	}
 
-	public static void SelectOption() {
+	public static void SelectOption() throws SQLException {
 		Scanner input = new Scanner(System.in);
 			// menu
 			System.out.println("\n\nManage Records Menu");
@@ -55,7 +55,7 @@ public class Sprint {
 			System.out.println("2. CRUD Scrum Team Members");
 			System.out.println("3. CRUD UserStory");
 			System.out.println("4. Create Sprint");
-			System.out.println("5. Add user stories to the backlog");
+			System.out.println("5. Add user stories to sprint backlog");
 			System.out.println("6. Features to operate user stories of backlog");
             System.out.println("7. List developer and Sprints");
             System.out.println("8. List developer that is part of a Sprint");
@@ -63,7 +63,6 @@ public class Sprint {
 			System.out.println("Enter Your Choice: ");
 	        int options = input.nextInt();
 			System.out.print("\n");
-
 			switch (options) {
 			case 1:
 				//CRUD stakeholders
@@ -81,12 +80,15 @@ public class Sprint {
 					String StakeholderRole = input.next();
 					System.out.println("Enter scrum team ID: ");
 					String ScrumTeamID = input.next();
-					String insert = "INSERT INTO Stakeholder(StakeholderName, StakeholderRole, ScrumTeamID)"   		
-							+ "\nVALUES (?, ?, ?)";
+					System.out.println("Enter StakeholderID: ");
+					int StakeholderID = input.nextInt();
+					String insert = "INSERT INTO Stakeholders(StakeholderName, StakeholderRole, ScrumTeamID, StakeholderID)"   		
+							+ "\nVALUES (?, ?, ?, ?)";
 					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
 					prep.setString(1, StakeholderName);
 					prep.setString(2, StakeholderRole);
 					prep.setString(3, ScrumTeamID);
+					prep.setInt(4, StakeholderID);
 					//executes prepare statement
 					prep.execute();
 					}
@@ -112,7 +114,8 @@ public class Sprint {
 				            	String StakeholderName = results.getString(1); 
 				            	String StakeholderRole = results.getString(2);
 				                String ScrumTeamID = results.getString(3);
-				                System.out.println(StakeholderName + "\t\t" + StakeholderRole+ "\t\t" + ScrumTeamID);
+				                int StakeholderID = results.getInt(4);
+				                System.out.println(StakeholderName + "\t\t" + StakeholderRole+ "\t\t" + ScrumTeamID + "\t\t" + StakeholderID);
 				            }
 				            results.close();
 				            stmnt.close();
@@ -125,11 +128,16 @@ public class Sprint {
 					
 				}
 				else if(opt1 == 4){
-					
-				}
-				else{
-					System.out.println("Try again");
-				}
+					System.out.println("Delete a stakeholder(ID): ");
+				    int IDdlt = input.nextInt();
+				    //sql statement for delete from table
+				    String delete = "DELETE FROM Stakeholders WHERE StakeholderID '" + IDdlt + "' ";
+				    stmnt.executeUpdate(delete);
+					}
+					else{
+						System.out.println("Try again");
+						opt1 = input.nextInt();
+					}
 				break;
 				
 			case 2:
@@ -142,21 +150,18 @@ public class Sprint {
 				if(opt2 == 1){
 				try{
 					System.out.println("Creating a sprint team member... ");
-					System.out.println("Entera sprint team id: ");
-					int idSprintTeam = input.nextInt();
 					System.out.println("Enter team member name: ");
 					String SprintTeamMemberName = input.next();
-					System.out.println("Enter the scrum team: ");
-					String ScrumTeam = input.next();
-					System.out.println("Enter date: ");
-					int idSprint = input.nextInt();
-					String insert = "INSERT INTO SprintTeam(idSprintTeam, SprintTeamMemberName, ScrumTeam, idSprint)"   		
-							+ "\nVALUES (?, ?, ?, ?)";
+					System.out.println("Enter sprint team id: ");
+					int idSprintTeam = input.nextInt();
+					System.out.println("Enter id scrum team member: ");
+					int idScrumTeam = input.nextInt();
+					String insert = "INSERT INTO SprintTeam(SprintTeamMemberName, idSprintTeam, idScrumTeam)"   		
+							+ "\nVALUES (?, ?, ?)";
 					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
-					prep.setInt(1, idSprintTeam);
-					prep.setString(2, SprintTeamMemberName);
-					prep.setString(3, ScrumTeam);
-					prep.setInt(4, idSprint);
+					prep.setString(1, SprintTeamMemberName);
+					prep.setInt(2, idSprintTeam);
+					prep.setInt(3, idScrumTeam);
 					//executes prepare statement
 					prep.execute();
 					}
@@ -176,14 +181,13 @@ public class Sprint {
 			                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
 			            }
 			            System.out.println("\n------------------------------------------------------------------------");
-			//prints the table along with the recipe
+			            //prints the table along with the recipe
 			            while(results.next())
 			            {
-			            	int SprintTeamID = results.getInt(1); 
-			            	String SprintTeamMemberName = results.getString(2);
+			            	String SprintTeamMemberName = results.getString(1); 
+			            	int idSprintTeam= results.getInt(2);
 			                String ScrumTeamID = results.getString(3);
-			                String idSprint = results.getString(4);
-			                System.out.println(SprintTeamID + "\t\t" + SprintTeamMemberName + "\t\t" + ScrumTeamID + "\t\t" + idSprint);
+			                System.out.println(SprintTeamMemberName + "\t\t" + idSprintTeam + "\t\t" + ScrumTeamID);
 			            }
 			            results.close();
 			            stmnt.close();
@@ -196,10 +200,15 @@ public class Sprint {
 					
 				}
 				else if(opt2 == 4){
-					
+				System.out.println("Delete a team member(ID): ");
+			    int IDdlt = input.nextInt();
+			    //sql statement for delete from table
+			    String delete = "DELETE FROM SprintTeam WHERE idScrumTeam= '" + IDdlt + "' ";
+			    stmnt.executeUpdate(delete);
 				}
 				else{
-					
+					System.out.println("Try again");
+					opt2 = input.nextInt();
 				}
 				break;
 			case 3:
