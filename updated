@@ -1,0 +1,317 @@
+// This program connects to Lamp Stack Server. Three variable names are used 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Scanner;
+import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class Sprint {
+	// Enter database name, username, and password
+	// private static String DBname = "mydb";
+	// private static String DBusername = "root";
+	// private static String DBpassword = "CECS323cecs";
+	
+	// Connection string
+    //private static String dbURL1 = "jdbc:mysql://localhost:3306/" + DBname + "?user=" + DBusername + "&password=" + DBpassword;
+	
+	//private static String dbURL1 = "jdbc:mysql://192.168.189.134:3306/empDB?user=cecs323b&password=cecs323";
+	
+	//These connect to school server
+	//private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h10?user=cecs323h10&password=ae9aed";
+	private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
+	
+	//private static String dbURL1 = "jdbc:mysql://localhost:3306/mydb?user=root&password=CECS323cecs";
+	private static Connection conn1 = null;
+	private static Statement stmnt = null;
+
+	public static void main(String[] args) {
+		CreateConnection();
+		SelectOption();
+		shutdown();
+	}
+
+	// Create connection
+	private static void CreateConnection() {
+		try {
+			conn1 = DriverManager.getConnection(dbURL1);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static void SelectOption() {
+		String username;
+		Scanner input = new Scanner(System.in);
+			// menu
+			System.out.println("\n\nManage Records Menu");
+			System.out.println(
+					"______________________________________________________________________________________________________");
+			System.out.println("1. Add Stakeholder");
+			System.out.println("2. Add Scrum Team Members");
+			System.out.println("3. List Stakeholders");
+			System.out.println("4. List Scrum Team Members");
+			System.out.println("5. Create Sprint");
+			System.out.println("6. Create UserStory");
+			System.out.println("7. List Sprint");
+			System.out.println("8. List UserStory");
+			System.out.println("9. ");
+			System.out.println("10. Quit");
+			System.out.println("Enter Your Choice: ");
+	        int options = input.nextInt();
+			System.out.print("\n\n");
+
+			switch (options) {
+			case 1:
+				//Add stakeholders
+				try{
+					System.out.println("Create a new stakeholder... ");
+					System.out.println("Enter team id: ");
+					int teamid = input.nextInt();
+					System.out.println("Enter team name: ");
+					String teamname = input.next();
+					System.out.println("Enter meeting: ");
+					String meeting = input.next();
+					System.out.println("Enter date: ");
+					String date = input.next();
+					String insert = "INSERT INTO teaminformation (teamid, teamname, meeting, date)"   		
+							+ "\nVALUES (?, ?, ?, ?)";
+					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+					prep.setInt(1, teamid);
+					prep.setString(2, teamname);
+					prep.setString(3, meeting);
+					prep.setString(4, date);
+					//executes prepare statement
+					prep.execute();
+					}
+				    catch (SQLException ex) {
+				        ex.printStackTrace();
+				    }
+				break;
+				
+			case 2:
+				//Add Sprint Team members
+				try{
+					System.out.println("Making a team member... ");
+					System.out.println("Enter team id: ");
+					int teamid = input.nextInt();
+					System.out.println("Enter team name: ");
+					String teamname = input.next();
+					System.out.println("Enter meeting: ");
+					String meeting = input.next();
+					System.out.println("Enter date: ");
+					String date = input.next();
+					String insert = "INSERT INTO teaminformation (teamid, teamname, meeting, date)"   		
+							+ "\nVALUES (?, ?, ?, ?)";
+					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+					prep.setInt(1, teamid);
+					prep.setString(2, teamname);
+					prep.setString(3, meeting);
+					prep.setString(4, date);
+					//executes prepare statement
+					prep.execute();
+					}
+				    catch (SQLException ex) {
+				        ex.printStackTrace();
+				    }
+				break;
+			case 3:
+				//List Stakeholders
+				 try{
+			            stmnt = conn1.createStatement();
+			           //establishes results of the table
+			            ResultSet results = stmnt.executeQuery("select * from Stakeholders");
+			            ResultSetMetaData rsmd = results.getMetaData();
+			            int numberCols = rsmd.getColumnCount();
+			            for (int i=1; i<=numberCols; i++) {
+			                //printColumnNames
+			                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+			            }
+			            System.out.println("\n------------------------------------------------------------------------");
+			//prints the table along with the recipe
+			            while(results.next())
+			            {
+			            	int ID = results.getInt(1); 
+			            	String name = results.getString(2);
+			                String meeting = results.getString(3);
+			                String date = results.getString(4);
+			                System.out.println(ID + "\t\t" + name + "\t\t" + meeting + "\t\t" + date);
+			            }
+			            results.close();
+			            stmnt.close();
+			        }
+			        catch (SQLException ex) {
+			            ex.printStackTrace();
+			        }
+			    break;
+			case 4:
+				//List Sprint Team Members
+				try{
+		            stmnt = conn1.createStatement();
+		           //establishes results of the table
+		            ResultSet results = stmnt.executeQuery("select * from ScrumTeam");
+		            ResultSetMetaData rsmd = results.getMetaData();
+		            int numberCols = rsmd.getColumnCount();
+		            for (int i=1; i<=numberCols; i++) {
+		                //printColumnNames
+		                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+		            }
+		            System.out.println("\n------------------------------------------------------------------------");
+		//prints the table along with the recipe
+		            while(results.next())
+		            {
+		            	int ID = results.getInt(1); 
+		            	String name = results.getString(2);
+		                String meeting = results.getString(3);
+		                String date = results.getString(4);
+		                System.out.println(ID + "\t\t" + name + "\t\t" + meeting + "\t\t" + date);
+		            }
+		            results.close();
+		            stmnt.close();
+		        }
+		        catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+		    break;
+			case 5:
+				//Add to sprint
+				try{
+					System.out.println("Making new Sprint... ");
+					System.out.println("Enter team id: ");
+					int teamid = input.nextInt();
+					System.out.println("Enter team name: ");
+					String teamname = input.next();
+					System.out.println("Enter meeting: ");
+					String meeting = input.next();
+					System.out.println("Enter date: ");
+					String date = input.next();
+					String insert = "INSERT INTO teaminformation (teamid, teamname, meeting, date)"   		
+							+ "\nVALUES (?, ?, ?, ?)";
+					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+					prep.setInt(1, teamid);
+					prep.setString(2, teamname);
+					prep.setString(3, meeting);
+					prep.setString(4, date);
+					//executes prepare statement
+					prep.execute();
+					}
+				    catch (SQLException ex) {
+				        ex.printStackTrace();
+				    }
+				break;
+			case 6:
+				//Add to Backlog
+				try{
+					System.out.println("Making new team... ");
+					System.out.println("Enter team id: ");
+					int teamid = input.nextInt();
+					System.out.println("Enter team name: ");
+					String teamname = input.next();
+					System.out.println("Enter meeting: ");
+					String meeting = input.next();
+					System.out.println("Enter date: ");
+					String date = input.next();
+					String insert = "INSERT INTO teaminformation (teamid, teamname, meeting, date)"   		
+							+ "\nVALUES (?, ?, ?, ?)";
+					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+					prep.setInt(1, teamid);
+					prep.setString(2, teamname);
+					prep.setString(3, meeting);
+					prep.setString(4, date);
+					//executes prepare statement
+					prep.execute();
+					}
+				    catch (SQLException ex) {
+				        ex.printStackTrace();
+				    }
+				break;
+			case 7:
+				//list sprints
+				 try{
+			            stmnt = conn1.createStatement();
+			           //establishes results of the table
+			            ResultSet results = stmnt.executeQuery("select * from Sprint");
+			            ResultSetMetaData rsmd = results.getMetaData();
+			            int numberCols = rsmd.getColumnCount();
+			            for (int i=1; i<=numberCols; i++) {
+			                //printColumnNames
+			                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+			            }
+			            System.out.println("\n------------------------------------------------------------------------");
+			//prints the table along with the recipe
+			            while(results.next())
+			            {
+			            	int ID = results.getInt(1); 
+			            	String name = results.getString(2);
+			                String meeting = results.getString(3);
+			                String date = results.getString(4);
+			                System.out.println(ID + "\t\t" + name + "\t\t" + meeting + "\t\t" + date);
+			            }
+			            results.close();
+			            stmnt.close();
+			        }
+			        catch (SQLException ex) {
+			            ex.printStackTrace();
+			        }
+			    break;
+			case 8:
+				//list UserStory
+				 try{
+			            stmnt = conn1.createStatement();
+			           //establishes results of the table
+			            ResultSet results = stmnt.executeQuery("select * from UserStory");
+			            ResultSetMetaData rsmd = results.getMetaData();
+			            int numberCols = rsmd.getColumnCount();
+			            for (int i=1; i<=numberCols; i++) {
+			                //printColumnNames
+			                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+			            }
+			            System.out.println("\n------------------------------------------------------------------------");
+			//prints the table along with the recipe
+			            while(results.next())
+			            {
+			            	String title = results.getString(1); 
+			            	String name = results.getString(2);
+			                String meeting = results.getString(3);
+			                String date = results.getString(4);
+			                System.out.println(title + "\t\t" + name + "\t\t" + meeting + "\t\t" + date);
+			            }
+			            results.close();
+			            stmnt.close();
+			        }
+			        catch (SQLException ex) {
+			            ex.printStackTrace();
+			        }
+			    break;
+			case 9:
+				break;
+			case 10:
+				shutdown();
+				break;
+			}
+		    System.out.println("Enter an option: ");
+			options = input.nextInt();
+		}
+		       
+			
+	// Terminate connection at end
+	private static void shutdown() {
+		try {
+			if (stmnt != null) {
+				stmnt.close();
+			}
+			if (conn1 != null) {
+				conn1 = DriverManager.getConnection(dbURL1 + "shutdown=true");
+				conn1.close();
+			}
+		} catch (SQLException slqEx) {
+
+		}
+	}
+}
+
