@@ -376,7 +376,9 @@ public class Sprint {
 				break;
 			case 7:
 				//List developer and Sprints
-				String SprintTeamID[] = new String[100];
+						String SprintTeamID[] = new String[100];
+				for (int i=0; i<100; i++)
+					SprintTeamID[i] = "\0";
 				int e=0;
 				try{
 		            stmnt = conn1.createStatement();
@@ -449,7 +451,7 @@ public class Sprint {
 				if (g==0)
 					System.out.println("Nothing to display");
 				System.out.println("\n");
-				} while(f+1 < e);
+				} while((!SprintTeamID[f].equals("\0")));
 				
 				break;
 				
