@@ -74,21 +74,21 @@ public class Sprint {
 				if(opt1 == 1){
 				try{
 					System.out.println("Creating a new stakeholder... ");
-					System.out.println("Enter stakeholder name: ");
-					String StakeholderName = input.next();
-					System.out.println("Enter stakholder role: ");
-					String StakeholderRole = input.next();
-					System.out.println("Enter scrum team ID: ");
-					String ScrumTeamID = input.next();
+					System.out.println("Enter stakeholder role: ");
+					String Stakeholderrole = input.next();
+					System.out.println("Enter stakholder name: ");
+					String Stakeholdername = input.next();
+					System.out.println("Enter sprint team id: ");
+					String Sprintteamid = input.next();
 					System.out.println("Enter StakeholderID: ");
-					int StakeholderID = input.nextInt();
-					String insert = "INSERT INTO Stakeholders(StakeholderName, StakeholderRole, ScrumTeamID, StakeholderID)"   		
-							+ "\nVALUES (?, ?, ?, ?)";
+					int Stakeholderid = input.nextInt();
+					String insert = "INSERT INTO Stakeholders(StakeholderRole, SprintTeamMembers_TeamMemberName, SprintTeam_idSprintTeam, StakeholderID)"   		
+							+ " VALUES (?, ?, ?, ?)";
 					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
-					prep.setString(1, StakeholderName);
-					prep.setString(2, StakeholderRole);
-					prep.setString(3, ScrumTeamID);
-					prep.setInt(4, StakeholderID);
+					prep.setString(1, Stakeholderrole);
+					prep.setString(2, Stakeholdername);
+					prep.setString(3,  Sprintteamid);
+					prep.setInt(4, Stakeholderid);
 					//executes prepare statement
 					prep.execute();
 					}
@@ -105,7 +105,7 @@ public class Sprint {
 				            int numberCols = rsmd.getColumnCount();
 				            for (int i=1; i<=numberCols; i++) {
 				                //printColumnNames
-				                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+				                System.out.print(rsmd.getColumnLabel(i)+"\t");
 				            }
 				            System.out.println("\n------------------------------------------------------------------------");
 				//prints the table along with the recipe
@@ -113,9 +113,9 @@ public class Sprint {
 				            {
 				            	String StakeholderName = results.getString(1); 
 				            	String StakeholderRole = results.getString(2);
-				                String ScrumTeamID = results.getString(3);
+				            	String idSprintTeam = results.getString(3);
 				                int StakeholderID = results.getInt(4);
-				                System.out.println(StakeholderName + "\t\t" + StakeholderRole+ "\t\t" + ScrumTeamID + "\t\t" + StakeholderID);
+				                System.out.println(StakeholderName + "\t\t" + StakeholderRole+ "\t\t" + idSprintTeam + "\t\t" + StakeholderID);
 				            }
 				            results.close();
 				            stmnt.close();
@@ -131,8 +131,8 @@ public class Sprint {
 					System.out.println("Delete a stakeholder(ID): ");
 				    int IDdlt = input.nextInt();
 				    //sql statement for delete from table
-				    String delete = "DELETE FROM Stakeholders WHERE idScrumTeam= '" + IDdlt + "' ";
-				    stmnt.executeUpdate(delete);
+				    PreparedStatement st = conn1.prepareStatement("DELETE from Stakeholders WHERE StakeholderID =" + IDdlt);
+				    st.executeUpdate();
 					}
 					else{
 						System.out.println("Try again");
@@ -150,18 +150,18 @@ public class Sprint {
 				if(opt2 == 1){
 				try{
 					System.out.println("Creating a sprint team member... ");
+					System.out.println("Enter sprint team member id: ");
+					int SprintTeamMemberID = input.nextInt();
 					System.out.println("Enter team member name: ");
-					String SprintTeamMemberName = input.next();
-					System.out.println("Enter sprint team id: ");
-					int idSprintTeam = input.nextInt();
-					System.out.println("Enter id sprint team member: ");
-					int idScrumTeam = input.nextInt();
-					String insert = "INSERT INTO SprintTeam(SprintTeamMemberName, idSprintTeam, idScrumTeam)"   		
+					String teamMemberName = input.next();
+					System.out.println("Enter id sprint team: ");
+					String idSprintTeam= input.next();
+					String insert = "INSERT INTO SprintTeamMembers(SprintTeamMemberID, TeamMemberName, SprintTeam_idSprintTeam)"   		
 							+ "\nVALUES (?, ?, ?)";
 					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
-					prep.setString(1, SprintTeamMemberName);
-					prep.setInt(2, idSprintTeam);
-					prep.setInt(3, idScrumTeam);
+					prep.setInt(1, SprintTeamMemberID);
+					prep.setString(2, teamMemberName);
+					prep.setString(3, idSprintTeam);
 					//executes prepare statement
 					prep.execute();
 					}
@@ -173,21 +173,21 @@ public class Sprint {
 					try{
 			            stmnt = conn1.createStatement();
 			           //establishes results of the table
-			            ResultSet results = stmnt.executeQuery("select * from SprintTeam");
+			            ResultSet results = stmnt.executeQuery("select * from SprintTeamMembers");
 			            ResultSetMetaData rsmd = results.getMetaData();
 			            int numberCols = rsmd.getColumnCount();
 			            for (int i=1; i<=numberCols; i++) {
 			                //printColumnNames
 			                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
 			            }
-			            System.out.println("\n------------------------------------------------------------------------");
+			            System.out.println("\n----------------------------------------------------------------------------");
 			            //prints the table along with the recipe
 			            while(results.next())
 			            {
-			            	String SprintTeamMemberName = results.getString(1); 
-			            	int idSprintTeam= results.getInt(2);
-			                String ScrumTeamID = results.getString(3);
-			                System.out.println(SprintTeamMemberName + "\t\t" + idSprintTeam + "\t\t" + ScrumTeamID);
+			            	int id = results.getInt(1); 
+			            	String SprintTeamMemberName= results.getString(2);
+			                String SprintTeamID = results.getString(3);
+			                System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamID);
 			            }
 			            results.close();
 			            stmnt.close();
@@ -203,8 +203,8 @@ public class Sprint {
 				System.out.println("Delete a team member(ID): ");
 			    int IDdlt = input.nextInt();
 			    //sql statement for delete from table
-			    String delete = "DELETE FROM SprintTeam WHERE idScrumTeam= '" + IDdlt + "' ";
-			    stmnt.executeUpdate(delete);
+			    PreparedStatement st = conn1.prepareStatement("DELETE from SprintTeamMembers WHERE SprintTeamMemberID=" + IDdlt);
+			    st.executeUpdate();
 				}
 				else{
 					System.out.println("Try again");
