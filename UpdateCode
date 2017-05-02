@@ -134,13 +134,13 @@ public class Sprint {
 					String StakeholderRole = input.next();
 					System.out.println("Enter sprint team id: ");
 					String idSprintteam = input.next();
-				    String insert = "UPDATE Stakeholders SET StakeholderName = ?, StakeholderRole = ?, idSprintTeam = ? WHERE StakeholderID =" + StakeID;
+				    String insert = "UPDATE Stakeholders SET StakeholderRole = ?, SprintTeamMembers_TeamMemberName = ?, SprintTeam_idSprintTeam = ? WHERE StakeholderID = ?";
 				    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
 				    prep.setString(1, StakeholderName);
 				    prep.setString(2, StakeholderRole);
 				    prep.setString(3, idSprintteam);
 				    prep.setInt(4, StakeID);
-				    prep.execute();
+				    prep.executeUpdate();
 				}
 				else if(opt1 == 4){
 					System.out.println("Delete a stakeholder(ID): ");
@@ -217,11 +217,12 @@ public class Sprint {
 					String sprintteammembername = input.next();
 					System.out.println("Enter sprint team id: ");
 					String idSprintteam  = input.next();
-				    String insert = "UPDATE SprintTeamMembers SET SprintTeamMemberName = ?, SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID =" + sprintteammemberid;
+				    String insert = "UPDATE SprintTeamMembers SET TeamMemberName = ?, SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID = ?";
 				    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
-				    prep.setInt(1, sprintteammemberid);
-				    prep.setString(2, sprintteammembername);
-				    prep.setString(3, idSprintteam);
+				    prep.setString(1, sprintteammembername);
+				    prep.setString(2, idSprintteam);
+				    prep.setInt(3, sprintteammemberid);
+				    prep.executeUpdate();
 				}
 				else if(opt2 == 4){
 				System.out.println("Delete a team member(ID): ");
