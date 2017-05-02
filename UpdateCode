@@ -242,25 +242,31 @@ public class Sprint {
 				System.out.println("2. Read UserStory");
 				System.out.println("3. Update UserStory");
 				System.out.println("4. Delete UserStory");
-				int opt4 = input.nextInt();
-				if(opt4 == 1){
+				int opt3 = input.nextInt();
+				if(opt3 == 1){
 					try{
 						System.out.println("Making UserStory... ");
 						System.out.println("Enter UserStory title: ");
 						String title = input.next();
 						System.out.println("Enter Project ID: ");
 						int project = input.nextInt();
-						System.out.println("Enter UserStory status: ");
-						String UserStoryStatus = input.next();
-						System.out.println("Enter Sprint ID: ");
-						int sprintid = input.nextInt();
-						String insert = "INSERT INTO UserStory(title, Project, UserStoryStatus, Sprint_idSprint)"   		
-								+ "\nVALUES (?, ?, ?, ?)";
+						System.out.println("Enter sprint id: ");
+						int idSprint = input.nextInt();
+						System.out.println("Enter id of sprint team: ");
+						String idSprintteam = input.next();
+						System.out.println("Enter userstory description: ");
+						String Description = input.next();
+						System.out.println("Enter userstory status: ");
+						String userstorystatus= input.next();
+						String insert = "INSERT INTO UserStory(Title, Project, Sprint_idSprint, Sprint_SprintTeam_idSprintTeam, Description, UserStoryStatus)"   		
+								+ "\nVALUES (?, ?, ?, ?, ?, ?)";
 						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
 						prep.setString(1, title);
 						prep.setInt(2, project);
-						prep.setString(3, UserStoryStatus);
-						prep.setInt(4, sprintid);
+						prep.setInt(3, idSprint);
+						prep.setString(4, idSprintteam);
+						prep.setString(5, Description);
+						prep.setString(6, userstorystatus);
 						//executes prepare statement
 						prep.execute();
 						}
@@ -268,7 +274,7 @@ public class Sprint {
 					        ex.printStackTrace();
 					    }	
 				}
-				else if(opt4 == 2)	{
+				else if(opt3 == 2)	{
 					 try{
 				            stmnt = conn1.createStatement();
 				           //establishes results of the table
@@ -279,14 +285,17 @@ public class Sprint {
 				                //printColumnNames
 				                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
 				            }
-				            System.out.println("\n------------------------------------------------------------------------");
-				//prints the table along with the recipe
+				            System.out.println("\n------------------------------------------------------------------------------------------------------------------------------");
 				            while(results.next())
 				            {
 				            	String title = results.getString(1); 
-				            	String UserStoryStatus = results.getString(2);
-				                int idSprint  = results.getInt(3);
-				                System.out.println(title + "\t\t" + UserStoryStatus + "\t\t" + idSprint);
+				            	int project = results.getInt(2);
+				            	int idsprint = results.getInt(3);
+				                String idSprintteam  = results.getString(4);
+				                String description = results.getString(5);
+				                String userstorystat = results.getString(6);
+				                
+				                System.out.println(title + "\t\t" + project + "\t\t" + idsprint + "\t\t" + idSprintteam + "\t\t" + description + "\t\t" + userstorystat);
 				            }
 				            results.close();
 				            stmnt.close();
@@ -295,21 +304,30 @@ public class Sprint {
 				            ex.printStackTrace();
 				        }
 				}
-				else if(opt4 == 3){
-					System.out.println("Enter userstory id to update: ");
-					int userstoryid = input.nextInt();
-					System.out.println("Enter new info, Sprint team member name: ");
-					String sprintteammembername = input.next();
-					System.out.println("Enter sprint team id: ");
-					String idSprintteam  = input.next();
-				    String insert = "UPDATE SprintTeamMembers SET SprintTeamMemberName = ?, SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID =" + userstoryid;
+				else if(opt3 == 3){
+					System.out.println("Enter Userstory project id to update: ");
+					int project = input.nextInt();
+					System.out.println("Enter new title of project: ");
+					String title = input.next();
+					System.out.println("Enter sprint id: ");
+					int Sprintid = input.nextInt();
+					System.out.println("Enter id of sprint team: ");
+					String sprintteamid = input.next();
+					System.out.println("Enter description of userstory: ");
+					String description = input.next();
+					System.out.println("Enter user story status(finished/started): ");
+					String userstorystatus = input.next();
+				    String insert = "UPDATE SprintTeamMembers SET Title = ?, Sprint_idSprint = ?, Sprint_SprintTeam_idSprintTeam = ?, Description = ?, UserStoryStatus= ? WHERE Project = ?";
 				    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
-				    prep.setInt(1, userstoryid);
-				    prep.setString(2, sprintteammembername);
-				    prep.setString(3, idSprintteam);
+				    prep.setString(1, title);
+				    prep.setInt(2, Sprintid);
+				    prep.setString(3, sprintteamid);
+				    prep.setString(4, description);
+				    prep.setString(5, userstorystatus);
+				    prep.setInt(6, project);
 				}
-				else if(opt4 == 4){
-				System.out.println("Delete an UserStory(ID): ");
+				else if(opt3 == 4){
+				System.out.println("Delete a userstory project: ");
 				int IDdlt = input.nextInt();
 				//sql statement for delete from table
 				PreparedStatement st = conn1.prepareStatement("DELETE from UserStory WHERE Project=" + IDdlt);
@@ -332,13 +350,16 @@ public class Sprint {
 						String endDate = input.next();
 						System.out.println("Enter status of sprint(finished/started): ");
 						String status = input.next();
-						String insert = "INSERT INTO Sprint(idSprint, startDate, endDate, status)"   		
-								+ "\nVALUES (?, ?, ?, ?)";
+						System.out.println("Enter id of sprint team");
+						String idSprintteam = input.next();
+						String insert = "INSERT INTO Sprint(idSprint, startDate, endDate, status, SprintTeam_idSprintTeam)"   		
+								+ "\nVALUES (?, ?, ?, ?, ?)";
 						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
 						prep.setInt(1, idSprint);
 						prep.setString(2, startDate);
 						prep.setString(3, endDate);
 						prep.setString(4, status);
+						prep.setString(5, idSprintteam);
 						//executes prepare statement
 						prep.execute();
 						}
