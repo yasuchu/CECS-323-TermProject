@@ -1,0 +1,24 @@
+try{
+   					 System.out.println("Enter Sprint Team ID");
+   					 String idSprintTeam = input.next();
+   					 stmnt = conn1.createStatement();
+   			        	//establishes results of the table
+   			         	ResultSet results = stmnt.executeQuery("select TeamMemberName from SprintTeamMembers WHERE SprintTeam_idSprintTeam ='" + idSprintTeam + "'");
+   			         	ResultSetMetaData rsmd = results.getMetaData();
+   			         	int numberCols = rsmd.getColumnCount();
+   			         	for (int i=1; i<=numberCols; i++) {
+   			             	//printColumnNames
+   			             	System.out.println(rsmd.getColumnLabel(i)+"\t\t");
+   			         	}
+   			         	while(results.next())
+   			         	{
+   			        		 String name = results.getString(1);
+   			             	System.out.println(name );
+   			         	}
+   			         	results.close();
+   			         	stmnt.close();	 
+   				 }
+   		     	catch (SQLException ex) {
+   		         	ex.printStackTrace();
+   		     	}
+   				 break;
