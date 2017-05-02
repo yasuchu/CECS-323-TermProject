@@ -63,6 +63,7 @@ public class Sprint {
 			System.out.println("Enter Your Choice: ");
 	        int options = input.nextInt();
 			System.out.print("\n");
+			while(options != 9){
 			switch (options) {
 			case 1:
 				//CRUD stakeholders
@@ -125,7 +126,21 @@ public class Sprint {
 				        }
 				}
 				else if(opt1 == 3){
-					
+					System.out.println("Enter stakeholder id to update: ");
+					int StakeID = input.nextInt();
+					System.out.println("Enter new info, Stakeholdername: ");
+					String StakeholderName = input.next();
+					System.out.println("Enter stakeholder role: ");
+					String StakeholderRole = input.next();
+					System.out.println("Enter sprint team id: ");
+					String idSprintteam = input.next();
+				    String insert = "UPDATE Stakeholders SET StakeholderName = ?, StakeholderRole = ?, idSprintTeam = ? WHERE StakeholderID =" + StakeID;
+				    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+				    prep.setString(1, StakeholderName);
+				    prep.setString(2, StakeholderRole);
+				    prep.setString(3, idSprintteam);
+				    prep.setInt(4, StakeID);
+				    prep.execute();
 				}
 				else if(opt1 == 4){
 					System.out.println("Delete a stakeholder(ID): ");
@@ -138,8 +153,7 @@ public class Sprint {
 						System.out.println("Try again");
 						opt1 = input.nextInt();
 					}
-				break;
-				
+				break;	
 			case 2:
 				//CRUD Sprint team members
 				System.out.println("1. Create sprint team member");
@@ -197,7 +211,17 @@ public class Sprint {
 			        }
 				}
 				else if(opt2 == 3){
-					
+					System.out.println("Enter sprint team member id to update: ");
+					int sprintteammemberid = input.nextInt();
+					System.out.println("Enter new info, Sprint team member name: ");
+					String sprintteammembername = input.next();
+					System.out.println("Enter sprint team id: ");
+					String idSprintteam  = input.next();
+				    String insert = "UPDATE SprintTeamMembers SET SprintTeamMemberName = ?, SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID =" + sprintteammemberid;
+				    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+				    prep.setInt(1, sprintteammemberid);
+				    prep.setString(2, sprintteammembername);
+				    prep.setString(3, idSprintteam);
 				}
 				else if(opt2 == 4){
 				System.out.println("Delete a team member(ID): ");
@@ -221,18 +245,21 @@ public class Sprint {
 				if(opt4 == 1){
 					try{
 						System.out.println("Making UserStory... ");
-						System.out.println("Enter Sprint id of the UserStory: ");
-						int idSprint = input.nextInt();
 						System.out.println("Enter UserStory title: ");
 						String title = input.next();
+						System.out.println("Enter Project ID: ");
+						int project = input.nextInt();
 						System.out.println("Enter UserStory status: ");
 						String UserStoryStatus = input.next();
-						String insert = "INSERT INTO UserStory(title, UserStoryStatus, idSprint)"   		
-								+ "\nVALUES (?, ?, ?)";
+						System.out.println("Enter Sprint ID: ");
+						int sprintid = input.nextInt();
+						String insert = "INSERT INTO UserStory(title, Project, UserStoryStatus, Sprint_idSprint)"   		
+								+ "\nVALUES (?, ?, ?, ?)";
 						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
 						prep.setString(1, title);
-						prep.setString(2, UserStoryStatus);
-						prep.setInt(3, idSprint);
+						prep.setInt(2, project);
+						prep.setString(3, UserStoryStatus);
+						prep.setInt(4, sprintid);
 						//executes prepare statement
 						prep.execute();
 						}
@@ -268,13 +295,28 @@ public class Sprint {
 				        }
 				}
 				else if(opt4 == 3){
-					
+					System.out.println("Enter userstory id to update: ");
+					int userstoryid = input.nextInt();
+					System.out.println("Enter new info, Sprint team member name: ");
+					String sprintteammembername = input.next();
+					System.out.println("Enter sprint team id: ");
+					String idSprintteam  = input.next();
+				    String insert = "UPDATE SprintTeamMembers SET SprintTeamMemberName = ?, SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID =" + userstoryid;
+				    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+				    prep.setInt(1, userstoryid);
+				    prep.setString(2, sprintteammembername);
+				    prep.setString(3, idSprintteam);
 				}
 				else if(opt4 == 4){
-					
+				System.out.println("Delete an UserStory(ID): ");
+				int IDdlt = input.nextInt();
+				//sql statement for delete from table
+				PreparedStatement st = conn1.prepareStatement("DELETE from UserStory WHERE Project=" + IDdlt);
+				st.executeUpdate();	
 				}
 				else{
-					
+					System.out.println("Try again");
+					opt2 = input.nextInt();
 				}
 				break;
 			case 4:
@@ -322,7 +364,8 @@ public class Sprint {
 			}
 		    System.out.println("Enter an option: ");
 			options = input.nextInt();
-		}      
+		}  
+	}    
 			
 	// Terminate connection at end
 	private static void shutdown() {
