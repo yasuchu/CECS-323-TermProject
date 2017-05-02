@@ -376,7 +376,83 @@ public class Sprint {
 				break;
 			case 7:
 				//List developer and Sprints
+				String SprintTeamID[] = new String[100];
+				int e=0;
+				try{
+		            stmnt = conn1.createStatement();
+		           //establishes results of the table
+		            ResultSet results = stmnt.executeQuery("select idSprintTeam from SprintTeam");
+		            //ResultSetMetaData rsmd = results.getMetaData();
+		            //int numberCols = rsmd.getColumnCount();
+		            /*
+		            for (int i=1; i<=numberCols; i++) {
+		                //printColumnNames
+		                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+		            }
+		            System.out.println("\n----------------------------------------------------------------------------");
+		            */
+		            //prints the table along with the recipe
+		            while(results.next())
+		            {
+		                SprintTeamID[e] = results.getString(1);
+		                //System.out.println(SprintTeamID[e]);
+		                e++;
+		            }
+		            results.close();
+		            stmnt.close();
+		        }
+		        catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+				
+				if (e == 0) {
+					System.out.println("Nothing to display\n");
+					break;
+				}
+				
+				int f=0;
+				int g=0;
+				do {
+					g=0;
+				try{
+		            stmnt = conn1.createStatement();
+		           //establishes results of the table
+		            ResultSet results = stmnt.executeQuery("select idSprint, startDate, endDate, status from Sprint where SprintTeam_idSprintTeam='" + SprintTeamID[f] + "'");
+		            ResultSetMetaData rsmd = results.getMetaData();
+		            int numberCols = rsmd.getColumnCount();
+		            System.out.println("Team: " + SprintTeamID[f]);
+		            for (int i=1; i<=numberCols; i++) {
+		                //printColumnNames
+		                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+		            }
+		            System.out.println("\n----------------------------------------------------------------------------");
+		            //prints the table along with the recipe
+		            while(results.next())
+		            {
+		            	g=1;
+		            	int id = results.getInt(1); 
+		            	String SprintTeamMemberName= results.getString(2);
+		                String SprintTeamI = results.getString(3);
+		                String Sprintjk = results.getString(4);
+		                //String Sprintjkl = results.getString(5);
+		                System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamI + "\t\t\t\t" + Sprintjk);
+		                e++;
+		            }
+		            results.close();
+		            stmnt.close();
+		        }
+		        catch (SQLException ex) {
+		            ex.printStackTrace();
+		        }
+				
+				f++;
+				if (g==0)
+					System.out.println("Nothing to display");
+				System.out.println("\n");
+				} while(f+1 < e);
+				
 				break;
+				
 			case 8:
 				//List developer that is part of a Sprint
 				try{
