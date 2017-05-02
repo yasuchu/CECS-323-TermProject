@@ -1,0 +1,6 @@
+INSERT INTO `cecs323h26`.`SprintTeam` values('SprintTeam01');
+INSERT INTO `cecs323h26`.`SprintTeamMembers` values(04, 'Calvin Vo', 'SprintTeam01');
+INSERT INTO `cecs323h26`.`Stakeholders` values('Manager', 'Hubert Huynh', 'SprintTeam01', 01);
+INSERT INTO `cecs323h26`.`SprintBackLog` values(01);
+INSERT INTO `cecs323h26`.`UserStory` values('UserStory02', 02, 1002, 'SprintTeam01', 'Add more features', 'finished');
+SELECT * FROM `cecs323h26`.`UserStory`;
