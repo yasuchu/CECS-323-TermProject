@@ -8,15 +8,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Scanner;
 import java.sql.PreparedStatement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class Sprint {
-	// Enter database name, username, and password
-	// private static String DBname = "mydb";
-	// private static String DBusername = "root";
-	// private static String DBpassword = "CECS323cecs";
-	
 	// Connection string
     //private static String dbURL1 = "jdbc:mysql://localhost:3306/" + DBname + "?user=" + DBusername + "&password=" + DBpassword;
 	
@@ -369,102 +362,199 @@ public class Sprint {
 
 			    break;
 			case 5:
-				//Add user stories to the backlog
+				//Add user stories to the sprint backlog
+				String a[] = new String[100];
+				int b[] = new int[100];
+				int c[] = new int[100];
+				String d[] = new String[100];
+				String e[] = new String[100];
+				String f[] = new String[100];
+				//String g[] = new String[100];
+				//String h[] = new String[100];
+				for(int i=0; i<100; i++)
+					a[i] =d[i]=e[i]=f[i] = "\0";
+				int k=0;
+				try{
+ 					 //System.out.println("Enter Sprint Team ID: ");
+ 					 //String idSprintTeam = input.next();
+ 					 stmnt = conn1.createStatement();
+ 			        	//establishes results of the table
+ 			         	ResultSet results = stmnt.executeQuery("select * from UserStory WHERE UserStoryStatus ='finished'");
+ 			         	/*
+ 			         	ResultSetMetaData rsmd = results.getMetaData();
+ 			         	int numberCols = rsmd.getColumnCount();
+ 			         	System.out.println("Members of Sprint team: ");
+ 			         	
+ 			         	for (int i=1; i<=numberCols; i++) {
+ 			             	//printColumnNames
+ 			             	System.out.println(rsmd.getColumnLabel(i)+"\t\t");
+ 			         	}
+ 			         	*/
+ 			         	while(results.next())
+ 			         	{
+ 			        		a[k] = results.getString(1);
+ 			        		b[k] = results.getInt(2);
+ 			        		c[k] = results.getInt(3);
+ 			        		d[k] = results.getString(4);
+ 			        		e[k] = results.getString(5);
+ 			        		f[k] = results.getString(6);
+ 			        		//g[k] = results.getString(7);
+ 			        		//h[k] = results.getString(8);
+ 			             	//System.out.println(name );
+ 			        		k++;
+ 			         	}
+ 			         	results.close();
+ 			         	stmnt.close();	 
+ 				 }
+ 		     	catch (SQLException ex) {
+ 		         	ex.printStackTrace();
+ 		     	}
+				System.out.println(a[0]);
+				int m=0;
+				do {
+				try{
+ 					 System.out.println("Enter Sprint Team ID: ");
+ 					 String idSprintTeam = input.next();
+ 					 stmnt = conn1.createStatement();
+ 			        	//establishes results of the table
+ 			         	PreparedStatement results = conn1.prepareStatement("insert into SprintBackLog values('" + idSprintTeam + "', '" + a[m] + "', " + b[m] + ", " + c[m] + ", '" + d[m] + "', '" + e[m] + "', '" + f[m] + "')");
+ 			         	/*
+ 			         	ResultSetMetaData rsmd = results.getMetaData();
+ 			         	int numberCols = rsmd.getColumnCount();
+ 			         	System.out.println("Members of Sprint team: ");
+ 			         	for (int i=1; i<=numberCols; i++) {
+ 			             	//printColumnNames
+ 			             	System.out.println(rsmd.getColumnLabel(i)+"\t\t");
+ 			         	}
+ 			         	while(results.next())
+ 			         	{
+ 			        		 String name = results.getString(1);
+ 			             	System.out.println(name );
+ 			         	}*/
+ 			         	results.executeUpdate();
+ 			         	stmnt.close();
+ 			         	stmnt.close();	 
+ 				 }
+ 		     	catch (SQLException ex) {
+ 		         	ex.printStackTrace();
+ 		     	}
+				m++;
+				} while(!(d[m].equals("\0")));
 		        break;
 			case 6:
 				//Features to operate user stories of backlog
+				System.out.println("Enter Userstory backlog id to update: ");
+				int userstorybacklogid = input.nextInt();
+				System.out.println("Enter new title of project: ");
+				String title = input.next();
+				System.out.println("Enter sprint id: ");
+				int Sprintid = input.nextInt();
+				System.out.println("Enter id of sprint team: ");
+				String sprintteamid = input.next();
+				System.out.println("Enter description of userstory: ");
+				String description = input.next();
+				System.out.println("Enter user story status(finished/started): ");
+				String userstorystatus = input.next();
+			    String insert = "UPDATE SprintTeamMembers SET Title = ?, Sprint_idSprint = ?, Sprint_SprintTeam_idSprintTeam = ?, Description = ?, UserStoryStatus= ? WHERE Project = ?";
+			    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+			    prep.setString(1, title);
+			    prep.setInt(2, Sprintid);
+			    prep.setString(3, sprintteamid);
+			    prep.setString(4, description);
+			    prep.setString(5, userstorystatus);
+			    prep.setInt(6, userstorybacklogid);
 				break;
 			case 7:
 				//List developer and Sprints
-						String SprintTeamID[] = new String[100];
-				for (int i=0; i<100; i++)
-					SprintTeamID[i] = "\0";
-				int e=0;
-				try{
-		            stmnt = conn1.createStatement();
-		           //establishes results of the table
-		            ResultSet results = stmnt.executeQuery("select idSprintTeam from SprintTeam");
-		            //ResultSetMetaData rsmd = results.getMetaData();
-		            //int numberCols = rsmd.getColumnCount();
-		            /*
-		            for (int i=1; i<=numberCols; i++) {
-		                //printColumnNames
-		                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
-		            }
-		            System.out.println("\n----------------------------------------------------------------------------");
-		            */
-		            //prints the table along with the recipe
-		            while(results.next())
-		            {
-		                SprintTeamID[e] = results.getString(1);
-		                //System.out.println(SprintTeamID[e]);
-		                e++;
-		            }
-		            results.close();
-		            stmnt.close();
-		        }
-		        catch (SQLException ex) {
-		            ex.printStackTrace();
-		        }
-				
-				if (e == 0) {
-					System.out.println("Nothing to display\n");
-					break;
-				}
-				
-				int f=0;
-				int g=0;
-				do {
-					g=0;
-				try{
-		            stmnt = conn1.createStatement();
-		           //establishes results of the table
-		            ResultSet results = stmnt.executeQuery("select idSprint, startDate, endDate, status from Sprint where SprintTeam_idSprintTeam='" + SprintTeamID[f] + "'");
-		            ResultSetMetaData rsmd = results.getMetaData();
-		            int numberCols = rsmd.getColumnCount();
-		            System.out.println("Team: " + SprintTeamID[f]);
-		            for (int i=1; i<=numberCols; i++) {
-		                //printColumnNames
-		                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
-		            }
-		            System.out.println("\n----------------------------------------------------------------------------");
-		            //prints the table along with the recipe
-		            while(results.next())
-		            {
-		            	g=1;
-		            	int id = results.getInt(1); 
-		            	String SprintTeamMemberName= results.getString(2);
-		                String SprintTeamI = results.getString(3);
-		                String Sprintjk = results.getString(4);
-		                //String Sprintjkl = results.getString(5);
-		                System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamI + "\t\t\t\t" + Sprintjk);
-		                e++;
-		            }
-		            results.close();
-		            stmnt.close();
-		        }
-		        catch (SQLException ex) {
-		            ex.printStackTrace();
-		        }
-				
-				f++;
-				if (g==0)
-					System.out.println("Nothing to display");
-				System.out.println("\n");
-				} while((!SprintTeamID[f].equals("\0")));
-				
-				break;
-				
+				String SprintTeamID[] = new String[100];
+		for (int i=0; i<100; i++)
+			SprintTeamID[i] = "\0";
+		int e1=0;
+		try{
+            stmnt = conn1.createStatement();
+           //establishes results of the table
+            ResultSet results = stmnt.executeQuery("select idSprintTeam from SprintTeam");
+            //ResultSetMetaData rsmd = results.getMetaData();
+            //int numberCols = rsmd.getColumnCount();
+            /*
+            for (int i=1; i<=numberCols; i++) {
+                //printColumnNames
+                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+            }
+            System.out.println("\n----------------------------------------------------------------------------");
+            */
+            //prints the table along with the recipe
+            while(results.next())
+            {
+                SprintTeamID[e1] = results.getString(1);
+                //System.out.println(SprintTeamID[e]);
+                e1++;
+            }
+            results.close();
+            stmnt.close();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+		
+		if (e1 == 0) {
+			System.out.println("Nothing to display\n");
+			break;
+		}
+		
+		int f1=0;
+		int g=0;
+		do {
+			g=0;
+		try{
+            stmnt = conn1.createStatement();
+           //establishes results of the table
+            ResultSet results = stmnt.executeQuery("select idSprint, startDate, endDate, status from Sprint where SprintTeam_idSprintTeam='" + SprintTeamID[f1] + "'");
+            ResultSetMetaData rsmd = results.getMetaData();
+            int numberCols = rsmd.getColumnCount();
+            System.out.println("Team: " + SprintTeamID[f1]);
+            for (int i=1; i<=numberCols; i++) {
+                //printColumnNames
+                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+            }
+            System.out.println("\n----------------------------------------------------------------------------");
+            //prints the table along with the recipe
+            while(results.next())
+            {
+            	g=1;
+            	int id = results.getInt(1); 
+            	String SprintTeamMemberName= results.getString(2);
+                String SprintTeamI = results.getString(3);
+                String Sprintjk = results.getString(4);
+                //String Sprintjkl = results.getString(5);
+                System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamI + "\t\t\t\t" + Sprintjk);
+                e1++;
+            }
+            results.close();
+            stmnt.close();
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+		
+		f1++;
+		if (g==0)
+			System.out.println("Nothing to display");
+		System.out.println("\n");
+		} while((!SprintTeamID[f1].equals("\0")));
+		
+		break;
 			case 8:
 				//List developer that is part of a Sprint
 				try{
-  					 System.out.println("Enter Sprint Team ID");
+  					 System.out.println("Enter Sprint Team ID: ");
   					 String idSprintTeam = input.next();
   					 stmnt = conn1.createStatement();
   			        	//establishes results of the table
   			         	ResultSet results = stmnt.executeQuery("select TeamMemberName from SprintTeamMembers WHERE SprintTeam_idSprintTeam ='" + idSprintTeam + "'");
   			         	ResultSetMetaData rsmd = results.getMetaData();
   			         	int numberCols = rsmd.getColumnCount();
+  			         	System.out.println("Members of Sprint team: ");
   			         	for (int i=1; i<=numberCols; i++) {
   			             	//printColumnNames
   			             	System.out.println(rsmd.getColumnLabel(i)+"\t\t");
