@@ -99,9 +99,9 @@ public class Sprint {
 				            int numberCols = rsmd.getColumnCount();
 				            for (int i=1; i<=numberCols; i++) {
 				                //printColumnNames
-				                System.out.print(rsmd.getColumnLabel(i)+"\t");
+				                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
 				            }
-				            System.out.println("\n------------------------------------------------------------------------");
+				            System.out.println("\n-----------------------------------------------------------------------------------------------------------------------------");
 				//prints the table along with the recipe
 				            while(results.next())
 				            {
@@ -109,7 +109,7 @@ public class Sprint {
 				            	String StakeholderRole = results.getString(2);
 				            	String idSprintTeam = results.getString(3);
 				                int StakeholderID = results.getInt(4);
-				                System.out.println(StakeholderName + "\t\t" + StakeholderRole+ "\t\t" + idSprintTeam + "\t\t" + StakeholderID);
+				                System.out.println(StakeholderName + "    \t\t\t\t" + StakeholderRole+ " \t\t\t\t\t" + idSprintTeam + "\t\t\t" + StakeholderID);
 				            }
 				            results.close();
 				            stmnt.close();
@@ -239,8 +239,20 @@ public class Sprint {
 				if(opt3 == 1){
 					try{
 						System.out.println("Making UserStory... ");
-						System.out.println("Enter UserStory title: ");
+						System.out.println("Enter new title as a 1. developer or 2. user: ");
 						String title = input.next();
+						while(title == "1" | title == "2"){
+							if(title == "1"){
+							title = "developer";	
+							}
+							else if(title == "2"){
+							title = "user";	
+							}
+							else{
+								System.out.println("Try again: ");
+								title = input.next();
+							}
+						}
 						System.out.println("Enter Project ID: ");
 						int project = input.nextInt();
 						System.out.println("Enter sprint id: ");
@@ -249,8 +261,20 @@ public class Sprint {
 						String idSprintteam = input.next();
 						System.out.println("Enter userstory description: ");
 						String Description = input.next();
-						System.out.println("Enter userstory status: ");
-						String userstorystatus= input.next();
+						System.out.println("Enter user story status(1. started or 2. finished): ");
+						String userstorystatus = input.next();
+						while(userstorystatus == "1" | userstorystatus == "2"){
+						if(userstorystatus == "1"){
+							userstorystatus = "started";
+						}
+						else if(userstorystatus == "2"){
+							userstorystatus = "finished";
+						}
+						else{
+							System.out.println("Try again: ");
+							userstorystatus = input.next();
+						}
+					}
 						String insert = "INSERT INTO UserStory(Title, Project, Sprint_idSprint, Sprint_SprintTeam_idSprintTeam, Description, UserStoryStatus)"   		
 								+ "\nVALUES (?, ?, ?, ?, ?, ?)";
 						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
@@ -278,7 +302,7 @@ public class Sprint {
 				                //printColumnNames
 				                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
 				            }
-				            System.out.println("\n------------------------------------------------------------------------------------------------------------------------------");
+				            System.out.println("\n------------------------------------------------------------------------------------------------------------------------------------------");
 				            while(results.next())
 				            {
 				            	String title = results.getString(1); 
@@ -288,7 +312,7 @@ public class Sprint {
 				                String description = results.getString(5);
 				                String userstorystat = results.getString(6);
 				                
-				                System.out.println(title + "\t\t" + project + "\t\t" + idsprint + "\t\t" + idSprintteam + "\t\t" + description + "\t\t" + userstorystat);
+				                System.out.println(title + "   \t\t" + project + "  \t\t" + idsprint + "\t\t\t" + idSprintteam + "\t\t\t" + description + "  \t\t" + userstorystat);
 				            }
 				            results.close();
 				            stmnt.close();
@@ -300,16 +324,40 @@ public class Sprint {
 				else if(opt3 == 3){
 					System.out.println("Enter Userstory project id to update: ");
 					int project = input.nextInt();
-					System.out.println("Enter new title of project: ");
+					System.out.println("Enter new title as a 1. developer or 2. user: ");
 					String title = input.next();
+					while(title != "1" | title != "2"){
+						if(title == "1"){
+						title = "developer";	
+						}
+						else if(title == "2"){
+						title = "user";	
+						}
+						else{
+							System.out.println("Try again: ");
+							title = input.next();
+						}
+					}
 					System.out.println("Enter sprint id: ");
 					int Sprintid = input.nextInt();
 					System.out.println("Enter id of sprint team: ");
 					String sprintteamid = input.next();
 					System.out.println("Enter description of userstory: ");
 					String description = input.next();
-					System.out.println("Enter user story status(finished/started): ");
+					System.out.println("Enter user story status(1. started or 2. finished): ");
 					String userstorystatus = input.next();
+					while(userstorystatus != "1" | userstorystatus != "2"){
+					if(userstorystatus == "1"){
+						userstorystatus = "started";
+					}
+					else if(userstorystatus == "2"){
+						userstorystatus = "finished";
+					}
+					else{
+						System.out.println("Try again: ");
+						userstorystatus = input.next();
+					}
+				}
 				    String insert = "UPDATE SprintTeamMembers SET Title = ?, Sprint_idSprint = ?, Sprint_SprintTeam_idSprintTeam = ?, Description = ?, UserStoryStatus= ? WHERE Project = ?";
 				    PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
 				    prep.setString(1, title);
@@ -335,7 +383,7 @@ public class Sprint {
 				//Create Sprint
 					try{
 						System.out.println("Making new Sprint... ");
-						System.out.println("Enter sprint id: ");
+						System.out.println("Enter sprint ID: ");
 						int idSprint = input.nextInt();
 						System.out.println("Enter start date of sprint: ");
 						String startDate = input.next();
@@ -343,7 +391,7 @@ public class Sprint {
 						String endDate = input.next();
 						System.out.println("Enter status of sprint(finished/started): ");
 						String status = input.next();
-						System.out.println("Enter id of sprint team");
+						System.out.println("Enter ID of sprint team");
 						String idSprintteam = input.next();
 						String insert = "INSERT INTO Sprint(idSprint, startDate, endDate, status, SprintTeam_idSprintTeam)"   		
 								+ "\nVALUES (?, ?, ?, ?, ?)";
@@ -515,9 +563,9 @@ public class Sprint {
             System.out.println("Team: " + SprintTeamID[f1]);
             for (int i=1; i<=numberCols; i++) {
                 //printColumnNames
-                System.out.print(rsmd.getColumnLabel(i)+"\t\t");
+                System.out.print(rsmd.getColumnLabel(i)+"\t\t\t");
             }
-            System.out.println("\n----------------------------------------------------------------------------");
+            System.out.println("\n---------------------------------------------------------------------------------------------------------");
             //prints the table along with the recipe
             while(results.next())
             {
@@ -527,7 +575,7 @@ public class Sprint {
                 String SprintTeamI = results.getString(3);
                 String Sprintjk = results.getString(4);
                 //String Sprintjkl = results.getString(5);
-                System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamI + "\t\t\t\t" + Sprintjk);
+                System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamI + "\t\t\t" + Sprintjk);
                 e1++;
             }
             results.close();
@@ -552,17 +600,15 @@ public class Sprint {
   					 stmnt = conn1.createStatement();
   			        	//establishes results of the table
   			         	ResultSet results = stmnt.executeQuery("select TeamMemberName from SprintTeamMembers WHERE SprintTeam_idSprintTeam ='" + idSprintTeam + "'");
-  			         	ResultSetMetaData rsmd = results.getMetaData();
-  			         	int numberCols = rsmd.getColumnCount();
   			         	System.out.println("Members of Sprint team: ");
-  			         	for (int i=1; i<=numberCols; i++) {
-  			             	//printColumnNames
-  			             	System.out.println(rsmd.getColumnLabel(i)+"\t\t");
-  			         	}
   			         	while(results.next())
   			         	{
   			        		 String name = results.getString(1);
-  			             	System.out.println(name );
+  			             	System.out.println(name);
+  			         	}
+  			         	if(!results.next()){
+  			         		System.out.println("______________");
+  			         		System.out.println("End of list");  			         	
   			         	}
   			         	results.close();
   			         	stmnt.close();	 
