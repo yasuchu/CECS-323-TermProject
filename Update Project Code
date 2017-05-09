@@ -786,7 +786,7 @@ public class Sprint2 {
 				} catch (SQLException ex) {
 					ex.printStackTrace();
 				}
-				System.out.println(a[0]);
+				//System.out.println(a[0]);
 				int m = 0;
 				do {
 					try {
