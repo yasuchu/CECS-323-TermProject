@@ -13,7 +13,7 @@ import java.sql.ResultSetMetaData;
 import java.util.Scanner;
 import java.sql.PreparedStatement;
 
-public class Sprint {
+public class Sprint2 {
 	// Connection string
 	// private static String dbURL1 = "jdbc:mysql://localhost:3306/" + DBname +
 	// "?user=" + DBusername + "&password=" + DBpassword;
@@ -22,12 +22,12 @@ public class Sprint {
 	// "jdbc:mysql://192.168.189.134:3306/empDB?user=cecs323b&password=cecs323";
 
 	// These connect to school server
-	 //private static String dbURL1 =
-	 //"jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h26?user=cecs323h26&password=ahse5o";
+	 private static String dbURL1 =
+	 "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h26?user=cecs323h26&password=ahse5o";
 	// private static String dbURL1 =
 	// "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
 
-	private static String dbURL1 = "jdbc:mysql://localhost:3306/cecs323h26?user=root&password=CECS323cecs";
+	//private static String dbURL1 = "jdbc:mysql://localhost:3306/cecs323h26?user=root&password=CECS323cecs";
 	private static Connection conn1 = null;
 	private static Statement stmnt = null;
 
@@ -105,12 +105,12 @@ public class Sprint {
 					String opt1 = input.next();
 					if (opt1.equals("1")) {
 						try {
+							input.nextLine();
 							System.out.println("Creating a new stakeholder... ");
 							System.out.println("Enter stakeholder role: ");
-							String Stakeholderrole = input.next();
-							System.out.print("\n");
-							System.out.println("Enter stakholder name: ");
-							String Stakeholdername = input.next();
+							String Stakeholderrole = input.nextLine();
+							System.out.println("Enter stakeholder name: ");
+							String Stakeholdername = input.nextLine();
 							System.out.print("\n");
 
 							String Sprintteamid;
@@ -266,7 +266,7 @@ public class Sprint {
 					} else if (opt1.equals("3")) {
 						//System.out.println("Enter stakeholder id to update: ");
 						int StakeID;
-						
+						input.nextLine();
 
 						int recipeN[] = new int[100];
 						int w=0, re;
@@ -329,9 +329,9 @@ public class Sprint {
 						
 						
 						System.out.println("Enter new info, Stakeholdername: ");
-						String StakeholderName = input.next();
+						String StakeholderName = input.nextLine();
 						System.out.println("Enter stakeholder role: ");
-						String StakeholderRole = input.next();
+						String StakeholderRole = input.nextLine();
 						//System.out.println("Enter sprint team id: ");
 						String idSprintteam;// = input.next();
 						
@@ -503,13 +503,14 @@ public class Sprint {
 				int opt2 = input.nextInt();
 				if (opt2 == 1) {
 					try {
+						input.nextLine();
 						System.out.println("Creating a sprint team member... ");
 						System.out.println("Enter sprint team member id: ");
 						int SprintTeamMemberID = input.nextInt();
 						System.out.println("Enter team member name: ");
-						String teamMemberName = input.next();
+						String teamMemberName = input.nextLine();
 						System.out.println("Enter id sprint team: ");
-						String idSprintTeam = input.next();
+						String idSprintTeam = input.nextLine();
 						String insert = "INSERT INTO SprintTeamMembers(SprintTeamMemberID, TeamMemberName, SprintTeam_idSprintTeam)"
 								+ "\nVALUES (?, ?, ?)";
 						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
@@ -547,12 +548,13 @@ public class Sprint {
 						ex.printStackTrace();
 					}
 				} else if (opt2 == 3) {
+					input.nextLine();
 					System.out.println("Enter sprint team member id to update: ");
 					int sprintteammemberid = input.nextInt();
 					System.out.println("Enter new info, Sprint team member name: ");
-					String sprintteammembername = input.next();
+					String sprintteammembername = input.nextLine();
 					System.out.println("Enter sprint team id: ");
-					String idSprintteam = input.next();
+					String idSprintteam = input.nextLine();
 					String insert = "UPDATE SprintTeamMembers SET TeamMemberName = ?, SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID = ?";
 					PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
 					prep.setString(1, sprintteammembername);
@@ -580,9 +582,10 @@ public class Sprint {
 				int opt3 = input.nextInt();
 				if (opt3 == 1) {
 					try {
+						input.nextLine();
 						System.out.println("Making UserStory... ");
 						System.out.println("Enter new title as a 1. developer or 2. user: ");
-						String title = input.next();
+						String title = input.nextLine();
 						while (title == "1" | title == "2") {
 							if (title == "1") {
 								title = "developer";
@@ -590,7 +593,7 @@ public class Sprint {
 								title = "user";
 							} else {
 								System.out.println("Try again: ");
-								title = input.next();
+								title = input.nextLine();
 							}
 						}
 						System.out.println("Enter Project ID: ");
@@ -598,9 +601,9 @@ public class Sprint {
 						System.out.println("Enter sprint id: ");
 						int idSprint = input.nextInt();
 						System.out.println("Enter id of sprint team: ");
-						String idSprintteam = input.next();
+						String idSprintteam = input.nextLine();
 						System.out.println("Enter userstory description: ");
-						String Description = input.next();
+						String Description = input.nextLine();
 						System.out.println("Enter user story status(1. started or 2. finished): ");
 						String userstorystatus = input.next();
 						while (userstorystatus == "1" | userstorystatus == "2") {
@@ -657,6 +660,7 @@ public class Sprint {
 						ex.printStackTrace();
 					}
 				} else if (opt3 == 3) {
+					input.nextLine();
 					System.out.println("Enter Userstory project id to update: ");
 					int project = input.nextInt();
 					System.out.println("Enter new title as a 1. developer or 2. user: ");
@@ -674,9 +678,9 @@ public class Sprint {
 					System.out.println("Enter sprint id: ");
 					int Sprintid = input.nextInt();
 					System.out.println("Enter id of sprint team: ");
-					String sprintteamid = input.next();
+					String sprintteamid = input.nextLine();
 					System.out.println("Enter description of userstory: ");
-					String description = input.next();
+					String description = input.nextLine();
 					System.out.println("Enter user story status(1. started or 2. finished): ");
 					String userstorystatus = input.next();
 					while (userstorystatus != "1" | userstorystatus != "2") {
@@ -711,13 +715,14 @@ public class Sprint {
 			case "4":
 				// Create Sprint
 				try {
+					input.nextLine();
 					System.out.println("Making new Sprint... ");
 					System.out.println("Enter sprint ID: ");
 					int idSprint = input.nextInt();
-					System.out.println("Enter start date of sprint: ");
-					String startDate = input.next();
-					System.out.println("Enter end date of sprint: ");
-					String endDate = input.next();
+					System.out.println("Enter start date of sprint(yyyy-mm-dd): ");
+					String startDate = input.nextLine();
+					System.out.println("Enter end date of sprint(yyyy-mm-dd): ");
+					String endDate = input.nextLine();
 					System.out.println("Enter status of sprint(finished/started): ");
 					String status = input.next();
 					System.out.println("Enter ID of sprint team");
@@ -812,16 +817,17 @@ public class Sprint {
 				break;
 			case "6":
 				// Features to operate user stories of backlog
+				input.nextLine();
 				System.out.println("Enter Userstory backlog id to update: ");
 				int userstorybacklogid = input.nextInt();
 				System.out.println("Enter new title of project: ");
-				String title = input.next();
+				String title = input.nextLine();
 				System.out.println("Enter sprint id: ");
 				int Sprintid = input.nextInt();
 				System.out.println("Enter id of sprint team: ");
-				String sprintteamid = input.next();
+				String sprintteamid = input.nextLine();
 				System.out.println("Enter description of userstory: ");
-				String description = input.next();
+				String description = input.nextLine();
 				System.out.println("Enter user story status(finished/started): ");
 				String userstorystatus = input.next();
 				String insert = "UPDATE SprintTeamMembers SET Title = ?, Sprint_idSprint = ?, Sprint_SprintTeam_idSprintTeam = ?, Description = ?, UserStoryStatus= ? WHERE Project = ?";
