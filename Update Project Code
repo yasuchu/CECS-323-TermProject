@@ -1,5 +1,3 @@
-package cecs323project;
-
 //Menu option 4 attribute (status) will only accept single character Strings according to mysql error message !!!!! Kevin
 //Main Menu option 2 keeps displaying invaid choice message for submenu but still executes commands properly Kevin
 
@@ -14,7 +12,7 @@ import java.sql.ResultSetMetaData;
 import java.util.Scanner;
 import java.sql.PreparedStatement;
 
-public class Scrum {
+public class Sprint {
 	// Connection string
 	// private static String dbURL1 = "jdbc:mysql://localhost:3306/" + DBname +
 	// "?user=" + DBusername + "&password=" + DBpassword;
@@ -138,15 +136,16 @@ public class Scrum {
 								for (int i = 1; i <= numberCols; i++) {
 									System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 								}
-								System.out.println("\n-------------------------------------");
+								System.out.println("\n----------------------------------------------------------------------------------------------");
 								while (results.next()) {
 									num1 = 0;
 									int recipeName = results.getInt(1);
 									String recipeNam = results.getString(2);
 									recx[w] = results.getString(3);
 									// String recipeNa = results.getString(3);
-									// String recipeN = results.getString(4);
-									System.out.println(w + "\t\t" + recipeName + "\t\t" + recipeNam + "\t\t" + recx[w]);
+									// String recipeN = results.getString(4);									
+									System.out.printf("%-24s%-30s%-26s%-20s", w, recipeName, recipeNam, recx[w]);
+									System.out.println();
 									w++;
 								}
 								results.close();
@@ -258,8 +257,8 @@ public class Scrum {
 								String StakeholderRole = results.getString(2);
 								String idSprintTeam = results.getString(3);
 								int StakeholderID = results.getInt(4);
-								System.out.println(StakeholderName + "    \t\t\t\t" + StakeholderRole + " \t\t\t\t\t"
-										+ idSprintTeam + "\t\t\t" + StakeholderID);
+								System.out.printf("%-33s%-42s%-37s%-25s", StakeholderName, StakeholderRole, idSprintTeam, StakeholderID);
+								System.out.println();
 							}
 							if (num1 == 0) {
 								System.out.println("nothing to display");
@@ -289,7 +288,7 @@ public class Scrum {
 							for (int i = 1; i <= numberCols; i++) {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
-							System.out.println("\n-------------------------------------");
+							System.out.println("\n--------------------------------------------------------------------------------------------------------------------------------------");
 							while (results.next()) {
 								num1 = 0;
 
@@ -299,8 +298,8 @@ public class Scrum {
 								recipeN[w] = results.getInt(4);
 								// String recipeNa = results.getString(3);
 								// String recipeN = results.getString(4);
-								System.out.println(w + "\t\t" + recipeName + "\t\t" + recipeNam + "\t\t" + recipeNa
-										+ "\t\t" + recipeN[w]);
+								System.out.printf("%-20s%-30s%-43s%-32s%-10s", w, recipeName, recipeNam, recipeNa, recipeN[w]);
+								System.out.println();
 								w++;
 							}
 							results.close();
@@ -376,7 +375,7 @@ public class Scrum {
 							for (int i = 1; i <= numberCols; i++) {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
-							System.out.println("\n-------------------------------------");
+							System.out.println("\n------------------------------------------------------------------------------------------");
 							while (results.next()) {
 								num1 = 0;
 								int recipeName = results.getInt(1);
@@ -384,7 +383,8 @@ public class Scrum {
 								recx[w] = results.getString(3);
 								// String recipeNa = results.getString(3);
 								// String recipeN = results.getString(4);
-								System.out.println(w + "\t\t" + recipeName + "\t\t" + recipeNam + "\t\t" + recx[w]);
+								System.out.printf("%-23s%-29s%-28s%-20s", w, recipeName, recipeNam, recx[w]);
+								System.out.println();
 								w++;
 							}
 							results.close();
@@ -401,7 +401,7 @@ public class Scrum {
 
 						// asks for user input on software team index
 						while (true) {
-							System.out.println("Enter Index Number: ");
+							System.out.println("Enter index of sprint team to assign stakeholder to: ");
 							us = input.nextLine();
 							System.out.print("\n");
 
@@ -475,7 +475,7 @@ public class Scrum {
 							for (int i = 1; i <= numberCols; i++) {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
-							System.out.println("\n-------------------------------------");
+							System.out.println("\n--------------------------------------------------------------------------------------------------------------------------------------------");
 							while (results.next()) {
 								num1 = 0;
 
@@ -484,9 +484,9 @@ public class Scrum {
 								String recipeNa = results.getString(3);
 								recipeN[w] = results.getInt(4);
 								// String recipeNa = results.getString(3);
-								// String recipeN = results.getString(4);
-								System.out.println(w + "\t\t" + recipeName + "\t\t" + recipeNam + "\t\t" + recipeNa
-										+ "\t\t" + recipeN[w]);
+								// String recipeN = results.getString(4);							
+								System.out.printf("%-17s%-31s%-40s%-35s%-23s", w, recipeName, recipeNam, recipeNa, recipeN[w]);
+								System.out.println();
 								w++;
 							}
 							results.close();
@@ -629,27 +629,12 @@ public class Scrum {
 								// establishes results of the table
 								ResultSet results = stmnt
 										.executeQuery("select SprintTeamMemberID from SprintTeamMembers");
-								// ResultSetMetaData rsmd =
-								// results.getMetaData();
-								// int numberCols = rsmd.getColumnCount();
-								/*
-								 * for (int i=1; i<=numberCols; i++) {
-								 * //printColumnNames
-								 * System.out.print(rsmd.getColumnLabel(i)+
-								 * "\t\t"); } System.out.println(
-								 * "\n----------------------------------------------------------------------------"
-								 * );
-								 */
-								// prints the table along with the recipe
 								while (results.next()) {
 									int inw = results.getInt(1);
 									if (SprintTeamMemberID == inw) {
 										num1 = 0;
 										// break;
 									}
-									// SprintTeamID[e1] = results.getString(1);
-									// System.out.println(SprintTeamID[e]);
-									// e1++;
 								}
 								results.close();
 								stmnt.close();
@@ -685,14 +670,15 @@ public class Scrum {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
 							System.out.println(
-									"\n----------------------------------------------------------------------------");
+									"\n-----------------------------------------");
 
 							// prints the table along with the recipe
 							while (results.next()) {
 								// int recipeName = results.getInt(1);
 								// String recipeNam = results.getString(2);
 								IDne[w2] = results.getString(1);
-								System.out.println(w2 + "\t\t" + IDne[w2]);
+								System.out.printf("%-14s%-10s",w2, IDne[w2]);
+								System.out.println();
 								w2++;
 							}
 							results.close();
@@ -747,14 +733,15 @@ public class Scrum {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
 							System.out.println(
-									"\n----------------------------------------------------------------------------");
+									"\n--------------------------------------------------------------------------------");
 							// prints the table along with the recipe
 							while (results.next()) {
 								num1 = 1;
 								int id = results.getInt(1);
 								String SprintTeamMemberName = results.getString(2);
 								String SprintTeamID = results.getString(3);
-								System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamID);
+								System.out.printf("%-36s%-26s%-20s", id, SprintTeamMemberName, SprintTeamID);
+								System.out.println();
 							}
 							results.close();
 							stmnt.close();
@@ -787,14 +774,15 @@ public class Scrum {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
 							System.out.println(
-									"\n----------------------------------------------------------------------------");
+									"\n-------------------------------------------------------------------------------------------------");
 
 							// prints the table along with the recipe
 							while (results.next()) {
 								Ie[w2] = results.getInt(1);
 								String recipeName = results.getString(2);
 								String recipeNam = results.getString(3);
-								System.out.println(w2 + "\t\t" + Ie[w2] + "\t\t" + recipeName + "\t\t" + recipeNam);
+								System.out.printf("%-25s%-28s%-23s%-20s", w2, Ie[w2], recipeName,recipeNam);
+								System.out.println();
 								w2++;
 							}
 							results.close();
@@ -807,7 +795,6 @@ public class Scrum {
 							int re;
 							System.out.println("Enter Index Number: ");
 							us = input.next();
-							System.out.print("\n");
 							try {
 								re = Integer.parseInt(us);
 							} catch (NumberFormatException p) {
@@ -853,7 +840,7 @@ public class Scrum {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
 							System.out.println(
-									"\n----------------------------------------------------------------------------");
+									"\n----------------------------------");
 
 							// prints the table along with the recipe
 							while (results.next()) {
@@ -925,14 +912,15 @@ public class Scrum {
 								System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 							}
 							System.out.println(
-									"\n----------------------------------------------------------------------------");
+									"\n-------------------------------------------------------------------------------------------------");
 
 							// prints the table along with the recipe
 							while (results.next()) {
 								Ie[w2] = results.getInt(1);
 								String recipeName = results.getString(2);
 								String recipeNam = results.getString(3);
-								System.out.println(w2 + "\t\t" + Ie[w2] + "\t\t" + recipeName + "\t\t" + recipeNam);
+								System.out.printf("%-25s%-28s%-24s%-20s", w2, Ie[w2], recipeName, recipeNam);
+								System.out.println();
 								w2++;
 							}
 							results.close();
