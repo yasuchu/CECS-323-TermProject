@@ -22,12 +22,12 @@ public class Sprint {
 	// "jdbc:mysql://192.168.189.134:3306/empDB?user=cecs323b&password=cecs323";
 
 	// These connect to school server
-	// private static String dbURL1 =
-	// "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h26?user=cecs323h26&password=ahse5o";
+	 private static String dbURL1 =
+	 "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h26?user=cecs323h26&password=ahse5o";
 	// private static String dbURL1 =
 	// "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
 
-	private static String dbURL1 = "jdbc:mysql://localhost:3306/cecs323h26?user=root&password=CECS323cecs";
+	//private static String dbURL1 = "jdbc:mysql://localhost:3306/cecs323h26?user=root&password=CECS323cecs";
 	private static Connection conn1 = null;
 	private static Statement stmnt = null;
 
