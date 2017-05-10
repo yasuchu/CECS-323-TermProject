@@ -1014,13 +1014,174 @@ public class Sprint {
 									title = input.nextLine();
 								}
 							}
-							System.out.println("Enter Project ID: ");
-							int project = input.nextInt();
-							System.out.println("Enter sprint id: ");
-							int idSprint = input.nextInt();
+							//System.out.println("Enter Project ID: ");
+							int project;// = input.nextInt();
+							
+							while (true) {
+								int re;
+								System.out.println("Enter Project ID: ");
+								us = input.next();
+								System.out.print("\n");
+								try {
+									re = Integer.parseInt(us);
+								} catch (NumberFormatException p) {
+									System.out.println("Entry not number, try again.");
+									continue;
+								}
+project = re;
+							
+								// System.out.println("value: " + IDdlt);
+								//break;
+							//}
+							int rec;
+							int w=0;
+							//int w2 = 0;
+							//int Ie[] = new int[100];
+							try {
+								stmnt = conn1.createStatement();
+								// establishes results of the table
+								ResultSet results = stmnt.executeQuery("select Project from UserStory");
+								
+								// prints the table along with the recipe
+								while (results.next()) {
+									rec = results.getInt(1);
+									if (project == rec) {
+										System.out.println("");
+										w=1;
+										break;
+									}
+									//w2=1;
+								}
+								results.close();
+								stmnt.close();
+							} catch (SQLException ex) {
+								ex.printStackTrace();
+							}
+							//project = rec;
+							if(w==1){
+								w=0;
+								continue;
+							}
+							break;
+							}
+
+							
+							//System.out.println("Enter sprint id: ");
+							int idSprint;// = input.nextInt();
+							
+							//int IDdlt;// = input.nextInt();
+							// sql statement for delete from table
+
+							int w2 = 0;
+							int Ie[] = new int[100];
+							try {
+								stmnt = conn1.createStatement();
+								// establishes results of the table
+								ResultSet results = stmnt.executeQuery("select * from UserStory");
+								ResultSetMetaData rsmd = results.getMetaData();
+								int numberCols = rsmd.getColumnCount();
+								System.out.print("index# \t\t");
+								for (int i = 1; i <= numberCols; i++) { // printColumnNames
+									System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+								}
+								System.out.println(
+										"\n----------------------------------------------------------------------------");
+
+								// prints the table along with the recipe
+								while (results.next()) {
+									String recipeName = results.getString(1);
+									Ie[w2] = results.getInt(2);
+									
+									int recipeNam = results.getInt(3);
+									String recipeNa = results.getString(4);
+									String recipeN = results.getString(5);
+									String recipe = results.getString(5);
+									System.out.println(w2 + "\t\t" + recipeName + "\t\t" + Ie[w2] + "\t\t" + recipeNam + "\t\t" + recipeNa + "\t\t" + recipeN + "\t\t" + recipe);
+									w2++;
+								}
+								results.close();
+								stmnt.close();
+							} catch (SQLException ex) {
+								ex.printStackTrace();
+							}
+
+							while (true) {
+								int re;
+								System.out.println("Enter Index Number: ");
+								us = input.next();
+								System.out.print("\n");
+								try {
+									re = Integer.parseInt(us);
+								} catch (NumberFormatException p) {
+									System.out.println("Entry not number, try again.");
+									continue;
+								}
+
+								if (re >= w2 || re < 0) {
+									System.out.println("Index Number does not exist, try again.");
+									continue;
+								}
+								idSprint = Ie[re];
+								// System.out.println("value: " + IDdlt);
+								break;
+							}
+
+							
 							input.nextLine();
-							System.out.println("Enter id of sprint team: ");
-							String idSprintteam = input.nextLine();
+							//System.out.println("Enter id of sprint team: ");
+							String idSprintteam;// = input.nextLine();
+							
+							int w21 = 0;
+							String Ie1[] = new String[100];
+							try {
+								stmnt = conn1.createStatement();
+								// establishes results of the tableteam
+								ResultSet results = stmnt.executeQuery("select * from SprintTeam");
+								ResultSetMetaData rsmd = results.getMetaData();
+								int numberCols = rsmd.getColumnCount();
+								System.out.print("index# \t\t");
+								for (int i = 1; i <= numberCols; i++) { // printColumnNames
+									System.out.print(rsmd.getColumnLabel(i) + "\t\t");
+								}
+								System.out.println(
+										"\n----------------------------------------------------------------------------");
+
+								// prints the table along with the recipe
+								while (results.next()) {
+									Ie1[w21] = results.getString(1);
+									//String recipeName = results.getString(2);
+									//String recipeNam = results.getString(3);
+									System.out.println(w21 + "\t\t" + Ie1[w21]);
+									w21++;
+								}
+								results.close();
+								stmnt.close();
+							} catch (SQLException ex) {
+								ex.printStackTrace();
+							}
+
+							while (true) {
+								int re;
+								System.out.println("Enter Index Number: ");
+								us = input.next();
+								System.out.print("\n");
+								try {
+									re = Integer.parseInt(us);
+								} catch (NumberFormatException p) {
+									System.out.println("Entry not number, try again.");
+									continue;
+								}
+
+								if (re >= w21 || re < 0) {
+									System.out.println("Index Number does not exist, try again.");
+									continue;
+								}
+								idSprintteam = Ie1[re];
+								// System.out.println("value: " + IDdlt);
+								break;
+							}
+
+							input.nextLine();
 							System.out.println("Enter userstory description: ");
 							String Description = input.nextLine();
 							System.out.println("Enter user story status(1. started or 2. finished): ");
