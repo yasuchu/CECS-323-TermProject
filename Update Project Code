@@ -1,6 +1,7 @@
+package cecs323project;
 
-// Menu option 4 attribute (status) will only accept single character Strings according to mysql error message !!!!! Kevin
-// Main Menu option 2 keeps displaying invaid choice message for submenu but still executes commands properly Kevin
+//Menu option 4 attribute (status) will only accept single character Strings according to mysql error message !!!!! Kevin
+//Main Menu option 2 keeps displaying invaid choice message for submenu but still executes commands properly Kevin
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +14,7 @@ import java.sql.ResultSetMetaData;
 import java.util.Scanner;
 import java.sql.PreparedStatement;
 
-public class Sprint {
+public class Scrum {
 	// Connection string
 	// private static String dbURL1 = "jdbc:mysql://localhost:3306/" + DBname +
 	// "?user=" + DBusername + "&password=" + DBpassword;
@@ -22,12 +23,12 @@ public class Sprint {
 	// "jdbc:mysql://192.168.189.134:3306/empDB?user=cecs323b&password=cecs323";
 
 	// These connect to school server
-	 private static String dbURL1 =
-	 "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h26?user=cecs323h26&password=ahse5o";
+	private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h26?user=cecs323h26&password=ahse5o";
 	// private static String dbURL1 =
 	// "jdbc:mysql://cecs-db01.coe.csulb.edu:3306/cecs323h15?user=cecs323h15&password=ii3beu";
 
-	//private static String dbURL1 = "jdbc:mysql://localhost:3306/cecs323h26?user=root&password=CECS323cecs";
+	// private static String dbURL1 =
+	// "jdbc:mysql://localhost:3306/cecs323h26?user=root&password=CECS323cecs";
 	private static Connection conn1 = null;
 	private static Statement stmnt = null;
 
@@ -53,7 +54,6 @@ public class Sprint {
 		String username;
 		String us;
 		String options = "";
-		Scanner un1 = new Scanner(System.in);
 
 		while (!(options.equals("9"))) {
 			// menu
@@ -61,7 +61,8 @@ public class Sprint {
 			System.out.println(
 					"______________________________________________________________________________________________________");
 			System.out.println("1. CRUD Stakeholder"); // Constraints Complete
-			System.out.println("2. CRUD Scrum Team Members");
+			System.out.println("2. CRUD Scrum Team Members"); // Constraints
+																// Complete
 			System.out.println("3. CRUD UserStory");
 			System.out.println("4. Create Sprint"); // Constraints Complete
 			System.out.println("5. Add user stories to sprint backlog"); // Constraints
@@ -163,7 +164,7 @@ public class Sprint {
 							// asks for user input on software team index
 							while (true) {
 								System.out.println("Enter Index Number: ");
-								us = un1.next();
+								us = input.next();
 								System.out.print("\n");
 								try {
 									re = Integer.parseInt(us);
@@ -185,7 +186,7 @@ public class Sprint {
 
 								while (true) {
 									System.out.println("Enter StakeholderID: ");
-									username = un1.next();
+									username = input.next();
 									System.out.print("\n");
 									try {
 										re = Integer.parseInt(username);
@@ -235,7 +236,7 @@ public class Sprint {
 
 						System.out.println("Stakeholder added.\n");
 
-						//break;
+						// break;
 					} else if (opt1.equals("2")) {
 						try {
 							num1 = 0;
@@ -268,7 +269,7 @@ public class Sprint {
 						} catch (SQLException ex) {
 							ex.printStackTrace();
 						}
-						//break;
+						// break;
 					} else if (opt1.equals("3")) {
 						// System.out.println("Enter stakeholder id to update:
 						// ");
@@ -317,7 +318,7 @@ public class Sprint {
 						// asks for user input on software team index
 						while (true) {
 							System.out.println("Enter Index Number: ");
-							us = un1.nextLine();
+							us = input.nextLine();
 							System.out.print("\n");
 							try {
 								re = Integer.parseInt(us);
@@ -401,7 +402,7 @@ public class Sprint {
 						// asks for user input on software team index
 						while (true) {
 							System.out.println("Enter Index Number: ");
-							us = un1.nextLine();
+							us = input.nextLine();
 							System.out.print("\n");
 
 							if (us.equals("")) {
@@ -439,7 +440,7 @@ public class Sprint {
 						/*
 						 * System.out.
 						 * println("\nAre you sure you want to continue (type: yes or no)?: "
-						 * ); username = un1.next(); // returns to menu if user
+						 * ); username = input.next(); // returns to menu if user
 						 * says no if (!(username.equals("yes"))) {
 						 * System.out.println("OK. No changes have been made.");
 						 * break; }
@@ -456,7 +457,7 @@ public class Sprint {
 						 * prep.executeUpdate();
 						 */
 
-						//break;
+						// break;
 					} else if (opt1.equals("4")) {
 						System.out.println("Delete a stakeholder(ID): ");
 						int IDdlt;
@@ -503,7 +504,7 @@ public class Sprint {
 						// asks for user input on software team index
 						while (true) {
 							System.out.println("Enter Index Number: ");
-							us = un1.next();
+							us = input.next();
 							System.out.print("\n");
 							try {
 								re = Integer.parseInt(us);
@@ -521,7 +522,7 @@ public class Sprint {
 						}
 
 						System.out.println("\nAre you sure you want to continue (type: yes or no)?: ");
-						username = un1.next();
+						username = input.next();
 						// returns to menu if user says no
 						if (!(username.equals("yes"))) {
 							System.out.println("OK. No changes have been made.");
@@ -535,13 +536,13 @@ public class Sprint {
 
 						System.out.println("Delete complete\n");
 
-						//break;
-					} 
-					
+						// break;
+					}
+
 					else if (opt1.equals("0")) {
 						break;
 					}
-					
+
 					else {
 						System.out.println("Valid choices are 1-4, Try again");
 					}
@@ -592,8 +593,7 @@ public class Sprint {
 					System.out.println("0. Return to MAIN MENU");
 					System.out.println("Enter Your Choice: ");
 					String opt2 = input.next();
-					
-					
+
 					if (opt2.equals("1")) {
 
 						int SprintTeamMemberID;// = input.nextInt();
@@ -606,7 +606,7 @@ public class Sprint {
 							int re;
 							// String us;
 							// System.out.println("Enter Index Number: ");
-							// us = un1.next();
+							// us = input.next();
 							// System.out.println("Enter Userstory backlog id to
 							// Update: ");
 							System.out.println("Enter sprint team member id: ");
@@ -704,7 +704,7 @@ public class Sprint {
 						while (true) {
 							int re;
 							System.out.println("Enter Index Number: ");
-							us = un1.next();
+							us = input.next();
 							System.out.print("\n");
 							try {
 								re = Integer.parseInt(us);
@@ -733,7 +733,7 @@ public class Sprint {
 						} catch (SQLException ex) {
 							ex.printStackTrace();
 						}
-						//break;
+						// break;
 					} else if (opt2.equals("2")) {
 						try {
 							num1 = 0;
@@ -767,12 +767,13 @@ public class Sprint {
 							continue;
 						}
 
-						//break;
+						// break;
 					} else if (opt2.equals("3")) {
-						//input.nextLine();
-						//System.out.println("Enter sprint team member id to update: ");
+						// input.nextLine();
+						// System.out.println("Enter sprint team member id to
+						// update: ");
 						int sprintteammemberid;// = input.nextInt();
-						
+
 						int w2 = 0;
 						int Ie[] = new int[100];
 						try {
@@ -805,7 +806,7 @@ public class Sprint {
 						while (true) {
 							int re;
 							System.out.println("Enter Index Number: ");
-							us = un1.next();
+							us = input.next();
 							System.out.print("\n");
 							try {
 								re = Integer.parseInt(us);
@@ -822,23 +823,23 @@ public class Sprint {
 							// System.out.println("value: " + IDdlt);
 							break;
 						}
-						
+
 						input.nextLine();
 						System.out.println("Enter new info, Sprint team member name: ");
 						String sprintteammembername = input.nextLine();
-						
+
 						if (!(sprintteammembername.equals(""))) {
-						String insert = "UPDATE SprintTeamMembers SET TeamMemberName = ? WHERE SprintTeamMemberID = ?";
-						PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
-						prep.setString(1, sprintteammembername);
-						//prep.setString(2, idSprintteam);
-						prep.setInt(2, sprintteammemberid);
-						prep.executeUpdate();
+							String insert = "UPDATE SprintTeamMembers SET TeamMemberName = ? WHERE SprintTeamMemberID = ?";
+							PreparedStatement prep = (PreparedStatement) ((Connection) conn1).prepareStatement(insert);
+							prep.setString(1, sprintteammembername);
+							// prep.setString(2, idSprintteam);
+							prep.setInt(2, sprintteammemberid);
+							prep.executeUpdate();
 						}
-						
-						//System.out.println("Enter sprint team id: ");
+
+						// System.out.println("Enter sprint team id: ");
 						String idSprintteam;// = input.nextLine();
-						
+
 						int w21 = 0;
 						String Ie1[] = new String[100];
 						try {
@@ -857,8 +858,8 @@ public class Sprint {
 							// prints the table along with the recipe
 							while (results.next()) {
 								Ie1[w21] = results.getString(1);
-								//String recipeName = results.getString(2);
-								//String recipeNam = results.getString(3);
+								// String recipeName = results.getString(2);
+								// String recipeNam = results.getString(3);
 								System.out.println(w21 + "\t\t" + Ie1[w21]);
 								w21++;
 							}
@@ -872,12 +873,12 @@ public class Sprint {
 							int re;
 							System.out.println("Enter Index Number: ");
 							us = input.nextLine();
-							
+
 							if ((us.equals(""))) {
-								idSprintteam ="";
+								idSprintteam = "";
 								break;
 							}
-							
+
 							System.out.print("\n");
 							try {
 								re = Integer.parseInt(us);
@@ -894,17 +895,18 @@ public class Sprint {
 							// System.out.println("value: " + IDdlt);
 							break;
 						}
-						
+
 						if (!(idSprintteam.equals(""))) {
-						String insertw = "UPDATE SprintTeamMembers SET SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID = ?";
-						PreparedStatement prepw = (PreparedStatement) ((Connection) conn1).prepareStatement(insertw);
-						//prep.setString(1, sprintteammembername);
-						prepw.setString(1, idSprintteam);
-						prepw.setInt(2, sprintteammemberid);
-						prepw.executeUpdate();
+							String insertw = "UPDATE SprintTeamMembers SET SprintTeam_idSprintTeam= ? WHERE SprintTeamMemberID = ?";
+							PreparedStatement prepw = (PreparedStatement) ((Connection) conn1)
+									.prepareStatement(insertw);
+							// prep.setString(1, sprintteammembername);
+							prepw.setString(1, idSprintteam);
+							prepw.setInt(2, sprintteammemberid);
+							prepw.executeUpdate();
 						}
-						
-						//break;
+
+						// break;
 					} else if (opt2.equals("4")) {
 						// System.out.println("Delete a team member(ID): ");
 						int IDdlt;// = input.nextInt();
@@ -942,7 +944,7 @@ public class Sprint {
 						while (true) {
 							int re;
 							System.out.println("Enter Index Number: ");
-							us = un1.next();
+							us = input.next();
 							System.out.print("\n");
 							try {
 								re = Integer.parseInt(us);
@@ -963,22 +965,22 @@ public class Sprint {
 						PreparedStatement st = conn1
 								.prepareStatement("DELETE from SprintTeamMembers WHERE SprintTeamMemberID=" + IDdlt);
 						st.executeUpdate();
-						//break;
-					} 
-					
-					if (opt2.equals("0")) {
-						break;
-					
+						// break;
 					}
-					
+
+					else if (opt2.equals("0")) {
+						break;
+
+					}
+
 					else {
 						System.out.println("Valid choices are 1-4, Try again");
 					}
-					//break;
+					// break;
 				}
 				break;
 			case "3":
-				
+
 				num1 = 1;
 				try {
 
@@ -1012,7 +1014,7 @@ public class Sprint {
 					System.out.println("No Sprints Exist");
 					break;
 				}
-				
+
 				while (true) {
 					// CRUD UserStory
 					System.out.println("1. Create UserStory");
@@ -1022,9 +1024,7 @@ public class Sprint {
 					System.out.println("0. Return to MAIN MENU");
 					System.out.println("Enter Your Choice: ");
 					String opt3 = input.next();
-					
-					
-					
+
 					if (opt3.equals("1")) {
 						try {
 							input.nextLine();
@@ -1081,7 +1081,7 @@ public class Sprint {
 						} catch (SQLException ex) {
 							ex.printStackTrace();
 						}
-						//break;
+						// break;
 					} else if (opt3.equals("2")) {
 						try {
 							stmnt = conn1.createStatement();
@@ -1111,7 +1111,7 @@ public class Sprint {
 						} catch (SQLException ex) {
 							ex.printStackTrace();
 						}
-						//break;
+						// break;
 					} else if (opt3.equals("3")) {
 						input.nextLine();
 						System.out.println("Enter Userstory project id to update: ");
@@ -1158,20 +1158,19 @@ public class Sprint {
 						prep.setString(4, description);
 						prep.setString(5, userstorystatus);
 						prep.setInt(6, project);
-						//break;
+						// break;
 					} else if (opt3.equals("4")) {
 						System.out.println("Delete a userstory project: ");
 						int IDdlt = input.nextInt();
 						// sql statement for delete from table
 						PreparedStatement st = conn1.prepareStatement("DELETE from UserStory WHERE Project=" + IDdlt);
 						st.executeUpdate();
-						//break;
+						// break;
 					}
-				
-				
+
 					else if (opt3.equals("0")) {
 						break;
-				
+
 					} else {
 						System.out.println("Valid choices are 1-4, Try again");
 					}
@@ -1219,7 +1218,7 @@ public class Sprint {
 						int re;
 						// String us;
 						// System.out.println("Enter Index Number: ");
-						// us = un1.next();
+						// us = input.next();
 						// System.out.println("Enter Userstory backlog id to
 						// Update: ");
 						System.out.println("Enter sprint ID: ");
@@ -1369,7 +1368,7 @@ public class Sprint {
 					while (true) {
 						int re;
 						System.out.println("Enter Index Number: ");
-						us = un1.next();
+						us = input.next();
 						System.out.print("\n");
 						try {
 							re = Integer.parseInt(us);
@@ -1651,7 +1650,7 @@ public class Sprint {
 					int re;
 					// String us;
 					// System.out.println("Enter Index Number: ");
-					// us = un1.next();
+					// us = input.next();
 					System.out.println("Enter Userstory backlog id to Update: ");
 					us = input.next();
 
@@ -1678,7 +1677,7 @@ public class Sprint {
 					int re;
 					// String us;
 					// System.out.println("Enter Index Number: ");
-					// us = un1.next();
+					// us = input.next();
 					// System.out.println("Enter Userstory backlog id to Update:
 					// ");
 					us = input.next();
@@ -1858,7 +1857,7 @@ public class Sprint {
 					// asks for user input on software team index
 					while (true) {
 						System.out.println("Enter Index Number: ");
-						us = un1.next();
+						us = input.next();
 						System.out.print("\n");
 						try {
 							re = Integer.parseInt(us);
@@ -1905,7 +1904,6 @@ public class Sprint {
 			// options = input.next();
 		}
 		input.close();
-		un1.close();
 	}
 
 	// Terminate connection at end
