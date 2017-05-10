@@ -958,9 +958,7 @@ public class Sprint {
 
 					else if (opt2.equals("0")) {
 						break;
-
 					}
-
 					else {
 						System.out.println("Valid choices are 1-4, Try again");
 					}
@@ -968,29 +966,14 @@ public class Sprint {
 				}
 				break;
 			case "3":
-
 				num1 = 1;
 				try {
 
 					stmnt = conn1.createStatement();
 					// establishes results of the table
 					ResultSet results = stmnt.executeQuery("select * from Sprint");
-					// ResultSetMetaData rsmd = results.getMetaData();
-					// int numberCols = rsmd.getColumnCount();
-					/*
-					 * for (int i=1; i<=numberCols; i++) { //printColumnNames
-					 * System.out.print(rsmd.getColumnLabel(i)+"\t\t"); }
-					 * System.out.println(
-					 * "\n----------------------------------------------------------------------------"
-					 * );
-					 */
-					// prints the table along with the recipe
 					while (results.next()) {
-						// int inw = results.getInt(1);
 						num1 = 0;
-						// SprintTeamID[e1] = results.getString(1);
-						// System.out.println(SprintTeamID[e]);
-						// e1++;
 					}
 					results.close();
 					stmnt.close();
@@ -1171,16 +1154,6 @@ public class Sprint {
 					stmnt = conn1.createStatement();
 					// establishes results of the table
 					ResultSet results = stmnt.executeQuery("select idSprintTeam from SprintTeam");
-					// ResultSetMetaData rsmd = results.getMetaData();
-					// int numberCols = rsmd.getColumnCount();
-					/*
-					 * for (int i=1; i<=numberCols; i++) { //printColumnNames
-					 * System.out.print(rsmd.getColumnLabel(i)+"\t\t"); }
-					 * System.out.println(
-					 * "\n----------------------------------------------------------------------------"
-					 * );
-					 */
-					// prints the table along with the recipe
 					while (results.next()) {
 						num1 = 1;
 					}
@@ -1204,15 +1177,8 @@ public class Sprint {
 
 					while (true) {
 						int re;
-						// String us;
-						// System.out.println("Enter Index Number: ");
-						// us = input.next();
-						// System.out.println("Enter Userstory backlog id to
-						// Update: ");
 						System.out.println("Enter sprint ID: ");
 						us = input.next();
-
-						System.out.print("\n");
 						try {
 							re = Integer.parseInt(us);
 						} catch (NumberFormatException p) {
@@ -1228,17 +1194,6 @@ public class Sprint {
 							stmnt = conn1.createStatement();
 							// establishes results of the table
 							ResultSet results = stmnt.executeQuery("select idSprint from Sprint");
-							// ResultSetMetaData rsmd = results.getMetaData();
-							// int numberCols = rsmd.getColumnCount();
-							/*
-							 * for (int i=1; i<=numberCols; i++) {
-							 * //printColumnNames
-							 * System.out.print(rsmd.getColumnLabel(i)+"\t\t");
-							 * } System.out.println(
-							 * "\n----------------------------------------------------------------------------"
-							 * );
-							 */
-							// prints the table along with the recipe
 							while (results.next()) {
 								int r = results.getInt(1);
 								if (r == re) {
@@ -1258,9 +1213,6 @@ public class Sprint {
 
 						break;
 					}
-
-					// System.out.println("Enter start date of
-					// sprint(yyyy-mm-dd): ");
 					String startDate;// = input.next();
 
 					while (true) {
@@ -1299,15 +1251,15 @@ public class Sprint {
 						break;
 					}
 
-					System.out.println("Enter status of sprint(1. finished/2. started/3. not started): ");
+					System.out.println("Enter status of sprint: (1)finished (2)started (3)not started: ");
 					String status = input.next();
 
 					while (true) {
 						if (status.equals("1")) {
-							status = "s";
+							status = "started";
 							break;
 						} else if (status.equals("2")) {
-							status = "f";
+							status = "finished";
 							break;
 						} else {
 							System.out.println("Try again: ");
@@ -1332,14 +1284,16 @@ public class Sprint {
 							System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 						}
 						System.out.println(
-								"\n----------------------------------------------------------------------------");
+								"\n-------------------------------------------------------------------------------------------------");
 
 						// prints the table along with the recipe
 						while (results.next()) {
 							int recipeName = results.getInt(1);
 							String recipeNam = results.getString(2);
 							IDn[w1] = results.getString(3);
-							System.out.println(w1 + "\t\t" + recipeName + "\t\t" + recipeNam + "\t\t" + IDn[w1]);
+							
+							System.out.printf("%-24s%-28s%-25s%-20s", w1, recipeName, recipeNam, IDn[w1]);
+							System.out.println();
 							w1++;
 						}
 						results.close();
@@ -1357,7 +1311,6 @@ public class Sprint {
 						int re;
 						System.out.println("Enter Index Number: ");
 						us = input.next();
-						System.out.print("\n");
 						try {
 							re = Integer.parseInt(us);
 						} catch (NumberFormatException p) {
@@ -1398,8 +1351,6 @@ public class Sprint {
 				String d[] = new String[100];
 				String e[] = new String[100];
 				String f[] = new String[100];
-				// String g[] = new String[100];
-				// String h[] = new String[100];
 				for (int i = 0; i < 100; i++)
 					a[i] = d[i] = e[i] = f[i] = "";
 				int k = 0;
@@ -1412,17 +1363,8 @@ public class Sprint {
 																															// Sprint_idSprint
 																															// !=
 																															// select
-																															// UserStory_Sprint_idSprint
-																															// from
+																															// UserStory_Sprint_idSprin																												// from
 																															// SprintBackLog");
-					/*
-					 * ResultSetMetaData rsmd = results.getMetaData(); int
-					 * numberCols = rsmd.getColumnCount();
-					 * System.out.println("Members of Sprint team: ");
-					 * 
-					 * for (int i=1; i<=numberCols; i++) { //printColumnNames
-					 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
-					 */
 					while (results.next()) {
 						a[k] = results.getString(1);
 						b[k] = results.getInt(2);
@@ -1454,18 +1396,9 @@ public class Sprint {
 					ResultSet results = stmnt.executeQuery("select UserStory_Sprint_idSprint from SprintBackLog"); // and
 																													// Sprint_idSprint
 																													// !=
-																													// select
-																													// UserStory_Sprint_idSprint
+																													// select																												// UserStory_Sprint_idSprint
 																													// from
 																													// SprintBackLog");
-					/*
-					 * ResultSetMetaData rsmd = results.getMetaData(); int
-					 * numberCols = rsmd.getColumnCount();
-					 * System.out.println("Members of Sprint team: ");
-					 * 
-					 * for (int i=1; i<=numberCols; i++) { //printColumnNames
-					 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
-					 */
 					while (results.next()) {
 						int rrr = results.getInt(1);
 						for (int j = 0; j <= k; j++) {
@@ -1535,15 +1468,6 @@ public class Sprint {
 						System.out.println(
 								a[s] + "\t\t" + b[s] + "\t\t" + c[s] + "\t\t" + d[s] + "\t\t" + e[s] + "\t\t" + f[s]);
 
-						/*
-						 * while (results.next()) { a[k] = results.getString(1);
-						 * b[k] = results.getInt(2); c[k] = results.getInt(3);
-						 * d[k] = results.getString(4); e[k] =
-						 * results.getString(5); f[k] = results.getString(6); //
-						 * g[k] = results.getString(7); // h[k] =
-						 * results.getString(8); // System.out.println(name );
-						 * k++; }
-						 */
 						result.close();
 						stmnt.close();
 					} catch (SQLException ex) {
@@ -1557,9 +1481,7 @@ public class Sprint {
 						s++;
 						continue;
 					}
-
 					try {
-
 						stmnt = conn1.createStatement();
 						// establishes results of the table
 						ResultSet results = stmnt.executeQuery("select SprintBackLogID from SprintBackLog"); // and
@@ -1569,22 +1491,12 @@ public class Sprint {
 																												// UserStory_Sprint_idSprint
 																												// from
 																												// SprintBackLog");
-						/*
-						 * ResultSetMetaData rsmd = results.getMetaData(); int
-						 * numberCols = rsmd.getColumnCount();
-						 * System.out.println("Members of Sprint team: ");
-						 * 
-						 * for (int i=1; i<=numberCols; i++) {
-						 * //printColumnNames
-						 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
-						 */
 						while (results.next()) {
 							String rrr = results.getString(1);
 							if (rrr.equals(idSprintTeam)) {
 								System.out.println("ID already exists, try again");
 								valid = false;
 							}
-
 						}
 						if (valid == false) {
 							valid = true;
@@ -1595,11 +1507,6 @@ public class Sprint {
 					} catch (SQLException ex) {
 						ex.printStackTrace();
 					}
-					// break;
-					// }
-
-					// int s=0;
-					// do {
 					try {
 						// System.out.println("Enter Sprint Team ID: ");
 						// String idSprintTeam = input.next();
@@ -1608,15 +1515,6 @@ public class Sprint {
 						PreparedStatement results = conn1.prepareStatement(
 								"insert into SprintBackLog values('" + idSprintTeam + "', '" + a[s] + "', " + b[s]
 										+ ", " + c[s] + ", '" + d[s] + "', '" + e[s] + "', '" + f[s] + "')");
-						/*
-						 * ResultSetMetaData rsmd = results.getMetaData(); int
-						 * numberCols = rsmd.getColumnCount();
-						 * System.out.println("Members of Sprint team: "); for
-						 * (int i=1; i<=numberCols; i++) { //printColumnNames
-						 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
-						 * while(results.next()) { String name =
-						 * results.getString(1); System.out.println(name ); }
-						 */
 						results.executeUpdate();
 						stmnt.close();
 						stmnt.close();
@@ -1687,7 +1585,7 @@ public class Sprint {
 				String sprintteamid = input.nextLine();
 				System.out.println("Enter description of userstory: ");
 				String description = input.nextLine();
-				System.out.println("Enter user story status(finished/started): ");
+				System.out.println("Enter user story status: (1)finished (2)started: ");
 				String userstorystatus = input.next();
 
 				while (true) {
@@ -1771,12 +1669,12 @@ public class Sprint {
 						while (results.next()) {
 							g = 1;
 							int id = results.getInt(1);
-							String SprintTeamMemberName = results.getString(2);
-							String SprintTeamI = results.getString(3);
-							String Sprintjk = results.getString(4);
+							String startDate = results.getString(2);
+							String endDate = results.getString(3);
+							String Status = results.getString(4);
 							// String Sprintjkl = results.getString(5);
-							System.out.println(id + "\t\t\t\t" + SprintTeamMemberName + "\t\t\t\t" + SprintTeamI
-									+ "\t\t\t" + Sprintjk);
+							System.out.printf("%-32s%-32s%-24s%-20s",id, startDate, endDate, Status);
+							System.out.println();
 							e1++;
 						}
 						results.close();
@@ -1816,7 +1714,7 @@ public class Sprint {
 						for (int i = 1; i <= numberCols; i++) {
 							System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 						}
-						System.out.println("\n-------------------------------------");
+						System.out.println("\n-----------------------------------------------------------------------------------------------------------------------");
 						while (results.next()) {
 							num1 = 0;
 							int recipeName = results.getInt(1);
@@ -1824,10 +1722,8 @@ public class Sprint {
 							String recipeNa = results.getString(3);
 							String recipeN = results.getString(4);
 							recx[w] = results.getString(5);
-							// String recipeNa = results.getString(3);
-							// String recipeN = results.getString(4);
-							System.out.println(w + "\t\t" + recipeName + "\t\t" + recipeNam + "\t\t" + recipeNa + "\t\t"
-									+ recipeN + "\t\t" + recx[w]);
+							System.out.printf("%-18s%-22s%-24s%-16s%-21s%-20s", w, recipeName, recipeNam, recipeNa, recipeN, recx[w]);
+							System.out.println();
 							w++;
 						}
 						results.close();
@@ -1873,7 +1769,7 @@ public class Sprint {
 						System.out.println(name);
 					}
 					if (!results.next()) {
-						System.out.println("______________");
+						System.out.println("------------");
 						System.out.println("End of list");
 					}
 					results.close();
