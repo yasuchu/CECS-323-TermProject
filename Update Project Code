@@ -12,7 +12,7 @@ import java.sql.ResultSetMetaData;
 import java.util.Scanner;
 import java.sql.PreparedStatement;
 
-public class Sprint {
+public class Sprint2 {
 	// Connection string
 	// private static String dbURL1 = "jdbc:mysql://localhost:3306/" + DBname +
 	// "?user=" + DBusername + "&password=" + DBpassword;
@@ -1000,7 +1000,7 @@ public class Sprint {
 						try {
 							input.nextLine();
 							System.out.println("Making UserStory... ");
-							System.out.println("Enter new title as a 1. developer or 2. user: ");
+							System.out.println("Enter new title as a:(1)developer  (2)user: ");
 							String title = input.nextLine();
 							while (true) {
 								if (title.equals("1")) {
@@ -1028,7 +1028,7 @@ public class Sprint {
 									System.out.println("Entry not number, try again.");
 									continue;
 								}
-project = re;
+                             project = re;
 							
 								// System.out.println("value: " + IDdlt);
 								//break;
@@ -1085,18 +1085,18 @@ project = re;
 									System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 								}
 								System.out.println(
-										"\n----------------------------------------------------------------------------");
+										"\n----------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 								// prints the table along with the recipe
 								while (results.next()) {
 									String recipeName = results.getString(1);
-									Ie[w2] = results.getInt(2);
-									
+									Ie[w2] = results.getInt(2);	
 									int recipeNam = results.getInt(3);
 									String recipeNa = results.getString(4);
 									String recipeN = results.getString(5);
-									String recipe = results.getString(5);
-									System.out.println(w2 + "\t\t" + recipeName + "\t\t" + Ie[w2] + "\t\t" + recipeNam + "\t\t" + recipeNa + "\t\t" + recipeN + "\t\t" + recipe);
+									String recipe = results.getString(6);
+									System.out.printf("%-16s%-18s%-22s%-27s%-31s%-26s%-20s", w2, recipeName, Ie[w2], recipeNam, recipeNa, recipeN, recipe);
+									System.out.println();
 									w2++;
 								}
 								results.close();
@@ -1144,7 +1144,7 @@ project = re;
 									System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 								}
 								System.out.println(
-										"\n----------------------------------------------------------------------------");
+										"\n-----------------------------------------");
 
 								// prints the table along with the recipe
 								while (results.next()) {
@@ -1164,7 +1164,6 @@ project = re;
 								int re;
 								System.out.println("Enter Index Number: ");
 								us = input.next();
-								System.out.print("\n");
 								try {
 									re = Integer.parseInt(us);
 								} catch (NumberFormatException p) {
@@ -1184,7 +1183,7 @@ project = re;
 							input.nextLine();
 							System.out.println("Enter userstory description: ");
 							String Description = input.nextLine();
-							System.out.println("Enter user story status(1. started or 2. finished): ");
+							System.out.println("Enter user story status (1)started (2) finished: ");
 							String userstorystatus = input.next();
 							// System.out.println("value: " + userstorystatus);
 							while (true) {
@@ -1235,8 +1234,9 @@ project = re;
 								String description = results.getString(5);
 								String userstorystat = results.getString(6);
 
-								System.out.println(title + "   \t\t" + project + "  \t\t" + idsprint + "\t\t\t"
-										+ idSprintteam + "\t\t\t" + description + "  \t\t" + userstorystat);
+								System.out.printf("%-18s%-22s%-25s%-34s%-28s%-20s", title, project, idsprint,
+										idSprintteam, description, userstorystat);
+							System.out.println();
 							}
 							results.close();
 							stmnt.close();
@@ -1262,10 +1262,11 @@ project = re;
 								title = input.nextLine();
 							}
 						}
+						input.nextLine();
 						System.out.println("Enter sprint id: ");
 						int Sprintid = input.nextInt();
 						System.out.println("Enter id of sprint team: ");
-						String sprintteamid = input.nextLine();
+						String sprintteamid = input.next();
 						System.out.println("Enter description of userstory: ");
 						String description = input.nextLine();
 						System.out.println("Enter user story status(1. started or 2. finished): ");
