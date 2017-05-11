@@ -1780,7 +1780,7 @@ project = re;
 
 				break;
 			case "5":
-				// Add user stories to the sprint backlog
+					// Add user stories to the sprint backlog
 
 				// Add user stories to the sprint backlog
 				String a[] = new String[100];
@@ -1789,6 +1789,8 @@ project = re;
 				String d[] = new String[100];
 				String e[] = new String[100];
 				String f[] = new String[100];
+				// String g[] = new String[100];1
+				// String h[] = new String[100];
 				for (int i = 0; i < 100; i++)
 					a[i] = d[i] = e[i] = f[i] = "";
 				int k = 0;
@@ -1801,8 +1803,17 @@ project = re;
 																															// Sprint_idSprint
 																															// !=
 																															// select
-																															// UserStory_Sprint_idSprin																												// from
+																															// UserStory_Sprint_idSprint
+																															// from
 																															// SprintBackLog");
+					/*
+					 * ResultSetMetaData rsmd = results.getMetaData(); int
+					 * numberCols = rsmd.getColumnCount();
+					 * System.out.println("Members of Sprint team: ");
+					 * 
+					 * for (int i=1; i<=numberCols; i++) { //printColumnNames
+					 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
+					 */
 					while (results.next()) {
 						a[k] = results.getString(1);
 						b[k] = results.getInt(2);
@@ -1834,9 +1845,18 @@ project = re;
 					ResultSet results = stmnt.executeQuery("select UserStory_Sprint_idSprint from SprintBackLog"); // and
 																													// Sprint_idSprint
 																													// !=
-																													// select																												// UserStory_Sprint_idSprint
+																													// select
+																													// UserStory_Sprint_idSprint
 																													// from
 																													// SprintBackLog");
+					/*
+					 * ResultSetMetaData rsmd = results.getMetaData(); int
+					 * numberCols = rsmd.getColumnCount();
+					 * System.out.println("Members of Sprint team: ");
+					 * 
+					 * for (int i=1; i<=numberCols; i++) { //printColumnNames
+					 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
+					 */
 					while (results.next()) {
 						int rrr = results.getInt(1);
 						for (int j = 0; j <= k; j++) {
@@ -1880,6 +1900,7 @@ project = re;
 				String idSprintTeam;
 				// while(true) {
 				int s = 0;
+				input.nextLine();
 				do {
 					boolean valid = true;
 
@@ -1898,20 +1919,32 @@ project = re;
 
 						ResultSetMetaData rsmd = result.getMetaData();
 						int numberCols = rsmd.getColumnCount();
-						System.out.println("Members of Sprint team: ");
+						//System.out.println("Members of Sprint team: ");
 
 						for (int i = 1; i <= numberCols; i++) { // printColumnNames
-							System.out.println(rsmd.getColumnLabel(i) + "\t\t");
+							System.out.print(rsmd.getColumnLabel(i) + "\t\t");
 						}
+						System.out.print("\n");
+						System.out.println("___________________________________________________________________________________________");
 						System.out.println(
 								a[s] + "\t\t" + b[s] + "\t\t" + c[s] + "\t\t" + d[s] + "\t\t" + e[s] + "\t\t" + f[s]);
-
+						System.out.print("\n");
+						/*
+						 * while (results.next()) { a[k] = results.getString(1);
+						 * b[k] = results.getInt(2); c[k] = results.getInt(3);
+						 * d[k] = results.getString(4); e[k] =
+						 * results.getString(5); f[k] = results.getString(6); //
+						 * g[k] = results.getString(7); // h[k] =
+						 * results.getString(8); // System.out.println(name );
+						 * k++; }
+						 */
 						result.close();
 						stmnt.close();
 					} catch (SQLException ex) {
 						ex.printStackTrace();
 					}
-
+					
+			
 					System.out.println("Enter New Sprint ID: ");
 					idSprintTeam = input.nextLine();
 
@@ -1919,7 +1952,9 @@ project = re;
 						s++;
 						continue;
 					}
+
 					try {
+
 						stmnt = conn1.createStatement();
 						// establishes results of the table
 						ResultSet results = stmnt.executeQuery("select SprintBackLogID from SprintBackLog"); // and
@@ -1929,12 +1964,22 @@ project = re;
 																												// UserStory_Sprint_idSprint
 																												// from
 																												// SprintBackLog");
+						/*
+						 * ResultSetMetaData rsmd = results.getMetaData(); int
+						 * numberCols = rsmd.getColumnCount();
+						 * System.out.println("Members of Sprint team: ");
+						 * 
+						 * for (int i=1; i<=numberCols; i++) {
+						 * //printColumnNames
+						 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
+						 */
 						while (results.next()) {
 							String rrr = results.getString(1);
 							if (rrr.equals(idSprintTeam)) {
 								System.out.println("ID already exists, try again");
 								valid = false;
 							}
+
 						}
 						if (valid == false) {
 							valid = true;
@@ -1945,6 +1990,11 @@ project = re;
 					} catch (SQLException ex) {
 						ex.printStackTrace();
 					}
+					// break;
+					// }
+
+					// int s=0;
+					// do {
 					try {
 						// System.out.println("Enter Sprint Team ID: ");
 						// String idSprintTeam = input.next();
@@ -1953,6 +2003,15 @@ project = re;
 						PreparedStatement results = conn1.prepareStatement(
 								"insert into SprintBackLog values('" + idSprintTeam + "', '" + a[s] + "', " + b[s]
 										+ ", " + c[s] + ", '" + d[s] + "', '" + e[s] + "', '" + f[s] + "')");
+						/*
+						 * ResultSetMetaData rsmd = results.getMetaData(); int
+						 * numberCols = rsmd.getColumnCount();
+						 * System.out.println("Members of Sprint team: "); for
+						 * (int i=1; i<=numberCols; i++) { //printColumnNames
+						 * System.out.println(rsmd.getColumnLabel(i)+"\t\t"); }
+						 * while(results.next()) { String name =
+						 * results.getString(1); System.out.println(name ); }
+						 */
 						results.executeUpdate();
 						stmnt.close();
 						stmnt.close();
